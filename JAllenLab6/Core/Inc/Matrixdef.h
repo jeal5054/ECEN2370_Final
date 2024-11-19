@@ -18,6 +18,7 @@
 /*	MATRIX PLAN
  13x10 Grid, x = 0 starts at left screen
  	 	 	 y = 0 starts at bottom of screen
+ 	 	 	      	  	  	  Tetris <- We have a spare L=8pixels and w= 240 pixels to add whatever
  	y-axis
  	 	12 	 	0	0	0	0	0	0	0	0	0	0
  	 	11 	 	0	0	0	0	0	0	0	0	0	0
@@ -36,38 +37,14 @@
  	 x-axis     0	1	2	3	4	5	6	7	8	9
  */
 
-
-
-
-
-
 static uint8_t RND_FLAG;
 static uint8_t dummyTable[13][10];
 static uint32_t randomNumber;
 typedef enum { // Orioinal Names of Tetris blocks
-	/*        1
-	 *    1[1]1
-	 */
 	ORICKY,
-
-	/*    1
-	 *    1[1]1
-	 */
 	BRICKY,
-
-	/*   1 1
-	 *    [1]1
-	 */
 	CLEVELAND,
-
-	/*      1 1
-	 *    1[1]
-	 */
 	RHODE,
-
-	/*
-	 *    11[1]1
-	 */
 	HERO,
 
 	/*      1
@@ -81,6 +58,13 @@ typedef enum { // Orioinal Names of Tetris blocks
 	SMASHBOY
 } Tetris_name;
 
+typedef enum{
+	ROTATION_0,
+	ROTATION_1,
+	ROTATION_2,
+	ROTATION_3
+} rotation;
+
 typedef struct {
 	uint8_t x;
 	uint8_t y;
@@ -88,6 +72,7 @@ typedef struct {
 
 typedef struct {
 	Tetris_name name;
+	rotation Rotation;
 	coordinates originbit;
 	coordinates suboriginbit_0;
 	coordinates suboriginbit_1;
