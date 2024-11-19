@@ -16,7 +16,7 @@
 
 static uint8_t dummyTable[13][10];
 
-enum { // Orioinal Names of Tetris blocks
+typedef enum { // Orioinal Names of Tetris blocks
 	/*      1
 	 *    111
 	 */
@@ -51,10 +51,10 @@ enum { // Orioinal Names of Tetris blocks
 	 *   11
 	 */
 	SMASHBOY
-}Tetris_name;
+} Tetris_name;
 
 typedef struct {
-	Tetris_name name = ORICKY;
+	Tetris_name name;
 	uint8_t originbit[13][10];
 	uint8_t suboriginbit_0[13][10];
 	uint8_t suboriginbit_1[13][10];
