@@ -45,7 +45,7 @@ I2C_HandleTypeDef hi2c3;
 
 LTDC_HandleTypeDef hltdc;
 
-RNG_HandleTypeDef hrng;
+//RNG_HandleTypeDef hrng;
 
 /* USER CODE BEGIN PV */
 
@@ -56,7 +56,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_LTDC_Init(void);
 static void MX_I2C3_Init(void);
-static void MX_RNG_Init(void);
+//static void MX_RNG_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -97,7 +97,7 @@ int main(void)
   MX_GPIO_Init();
   MX_LTDC_Init();
   MX_I2C3_Init();
-  MX_RNG_Init();
+  //MX_RNG_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -294,8 +294,9 @@ static void MX_LTDC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_RNG_Init(void)
-{
+
+//static void MX_RNG_Init(void)
+//{
 
   /* USER CODE BEGIN RNG_Init 0 */
 
@@ -304,16 +305,16 @@ static void MX_RNG_Init(void)
   /* USER CODE BEGIN RNG_Init 1 */
 
   /* USER CODE END RNG_Init 1 */
-  hrng.Instance = RNG;
-  if (HAL_RNG_Init(&hrng) != HAL_OK)
-  {
-    Error_Handler();
-  }
+  //hrng.Instance = RNG;
+  //if (HAL_RNG_Init(&hrng) != HAL_OK)
+  //{
+    //Error_Handler();
+  //}
   /* USER CODE BEGIN RNG_Init 2 */
 
   /* USER CODE END RNG_Init 2 */
 
-}
+//}
 
 /**
   * @brief GPIO Initialization Function

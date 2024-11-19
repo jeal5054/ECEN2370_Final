@@ -2,6 +2,5 @@
 ../Core/Src/main.c:120:6:SystemClock_Config	3
 ../Core/Src/main.c:167:13:MX_I2C3_Init	4
 ../Core/Src/main.c:215:13:MX_LTDC_Init	4
-../Core/Src/main.c:297:13:MX_RNG_Init	2
-../Core/Src/main.c:323:13:MX_GPIO_Init	1
-../Core/Src/main.c:505:6:Error_Handler	1
+../Core/Src/main.c:324:13:MX_GPIO_Init	1
+../Core/Src/main.c:506:6:Error_Handler	1

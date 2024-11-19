@@ -9,65 +9,101 @@
 #define INC_MATRIXDEF_H_
 
 #include <stdint.h>
+#include "stm32f4xx_hal.h"
 
 #define pixel_Width 24
 #define pixel_Length 24
 #define pixel_Area (pixel_Width*pixel_Length)
 
-static uint8_t dummyTable[13][10];
+/*	MATRIX PLAN
+ 13x10 Grid, x = 0 starts at left screen
+ 	 	 	 y = 0 starts at bottom of screen
+ 	y-axis
+ 	 	12 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	11 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	10 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	9 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	8 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	7 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	6 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	5 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	4 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	3 		0	0	0	0	0	0	0	0	0	0
+ 	 	2 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	1 	 	0	0	0	0	0	0	0	0	0	0
+ 	 	0 	 	0	0	0	0	0	0	0	0	0	0
 
+ 	 x-axis     0	1	2	3	4	5	6	7	8	9
+ */
+
+
+
+
+
+
+static uint8_t RND_FLAG;
+static uint8_t dummyTable[13][10];
+static uint32_t randomNumber;
 typedef enum { // Orioinal Names of Tetris blocks
-	/*      1
-	 *    111
+	/*        1
+	 *    1[1]1
 	 */
 	ORICKY,
 
 	/*    1
-	 *    111
+	 *    1[1]1
 	 */
 	BRICKY,
 
-	/*   11
-	 *    11
+	/*   1 1
+	 *    [1]1
 	 */
 	CLEVELAND,
 
-	/*   11
-	 *    11
+	/*      1 1
+	 *    1[1]
 	 */
 	RHODE,
 
 	/*
-	 *    1111
+	 *    11[1]1
 	 */
 	HERO,
 
-	/*     1
-	 *    111
+	/*      1
+	 *    1[1]1
 	 */
 	TEEWEE,
 
-	/*   11
-	 *   11
+	/*    1 1
+	 *   [1]1
 	 */
 	SMASHBOY
 } Tetris_name;
 
 typedef struct {
+	uint8_t x;
+	uint8_t y;
+} coordinates;
+
+typedef struct {
 	Tetris_name name;
-	uint8_t originbit[13][10];
-	uint8_t suboriginbit_0[13][10];
-	uint8_t suboriginbit_1[13][10];
-	uint8_t suboriginbit_2[13][10];
+	coordinates originbit;
+	coordinates suboriginbit_0;
+	coordinates suboriginbit_1;
+	coordinates suboriginbit_2;
 } Object;
+
 /*
 	Equations for Verification and Preventing Errors
 */
 
+
 /*******
  Equations used for matrix manipulation of variable
 *******/
-void object_Select(void);
+void RND_NUM(void);
+Object object_Select(void);
 void shift_Left(Object object);
 void shift_Right(void);
 void transform_Matrix(void);
