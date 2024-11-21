@@ -20,6 +20,22 @@ void RND_NUM(void) {
 	}
 }
 
+uint8_t check_State(Object object){
+	if(     (object.originbit.x <= 0) || (object.originbit.x >= 9) ||
+	   (object.suboriginbit_0.x <= 0) || (object.suboriginbit_0.x >= 9) ||
+	   (object.suboriginbit_1.x <= 0) || (object.suboriginbit_1.x >= 9) ||
+	   (object.suboriginbit_2.x <= 0) || (object.suboriginbit_2.x >= 9) )
+	{
+		return 0;
+	} else if( (object.originbit.y <= 0)      || (object.suboriginbit_0.y <= 0) ||
+			   (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) )
+	{
+		return 1;
+	} else {
+		return 2;
+	}
+}
+
 Object object_Select(void){
 	RND_NUM();
 	switch(randomNumber%7) {
@@ -32,14 +48,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Oricky.suboriginbit_0.x = Oricky.originbit.x - 1;   //		 1
-			Oricky.suboriginbit_0.y = Oricky.originbit.y;		// [1] 1 1
-
-			Oricky.suboriginbit_1.x = Oricky.originbit.x + 1;	//        1
-			Oricky.suboriginbit_1.y = Oricky.originbit.y;		//  1  1 [1]
-
-			Oricky.suboriginbit_2.x = Oricky.originbit.x + 1;	// 	  [1]
-			Oricky.suboriginbit_2.y = Oricky.originbit.y + 1; 	// 1 1 1
+		    Oricky = transform_rotation(Oricky, Oricky.Rotation);
 			return Oricky;
 			break;
 
@@ -52,14 +61,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Bricky.suboriginbit_0.x = Bricky.originbit.x - 1;   //	1
-			Bricky.suboriginbit_0.y = Bricky.originbit.y;		// [1] 1 1
-
-			Bricky.suboriginbit_1.x = Bricky.originbit.x + 1;	//  1
-			Bricky.suboriginbit_1.y = Bricky.originbit.y;		//  1  1 [1]
-
-			Bricky.suboriginbit_2.x = Bricky.originbit.x - 1;	//[1]
-			Bricky.suboriginbit_2.y = Bricky.originbit.y + 1; 	// 1 1 1
+			Bricky = transform_rotation(Bricky, Bricky.Rotation);
 			return Bricky;
 			break;
 
@@ -72,14 +74,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Cleveland.suboriginbit_0.x = Cleveland.originbit.x;			 //	1 [1]
-			Cleveland.suboriginbit_0.y = Cleveland.originbit.y + 1;		 //    1 1
-
-			Cleveland.suboriginbit_1.x = Cleveland.originbit.x - 1;		 // [1] 1
-			Cleveland.suboriginbit_1.y = Cleveland.originbit.y + 1;		 //     1 1
-
-			Cleveland.suboriginbit_2.x = Cleveland.originbit.x + 1;		 //  1 1
-			Cleveland.suboriginbit_2.y = Cleveland.originbit.y; 	     //    1 [1]
+		    Cleveland = transform_rotation(Cleveland, Cleveland.Rotation);
 			return Cleveland;
 			break;
 
@@ -92,14 +87,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Rhode.suboriginbit_0.x = Rhode.originbit.x;			 //	  [1] 1
-			Rhode.suboriginbit_0.y = Rhode.originbit.y + 1;		 //  1 1
-
-			Rhode.suboriginbit_1.x = Rhode.originbit.x + 1;		 //    1 [1]
-			Rhode.suboriginbit_1.y = Rhode.originbit.y + 1;		 //  1 1
-
-			Rhode.suboriginbit_2.x = Rhode.originbit.x - 1;		 //     1 1
-			Rhode.suboriginbit_2.y = Rhode.originbit.y; 	     // [1] 1
+			Rhode = transform_rotation(Rhode, Rhode.Rotation);
 			return Rhode;
 			break;
 
@@ -112,14 +100,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Hero.suboriginbit_0.x = Hero.originbit.x - 1;	 //
-			Hero.suboriginbit_0.y = Hero.originbit.y;		 // 1 [1] 1 1
-
-			Hero.suboriginbit_1.x = Hero.originbit.x - 2;	 //
-			Hero.suboriginbit_1.y = Hero.originbit.y;		 // [1] 1 1 1
-
-			Hero.suboriginbit_2.x = Hero.originbit.x + 1;	 //
-			Hero.suboriginbit_2.y = Hero.originbit.y; 	     //  1 1 1 [1]
+			Hero = transform_rotation(Hero, Hero.Rotation);
 			return Hero;
 			break;
 
@@ -132,14 +113,7 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Teewee.suboriginbit_0.x = Teewee.originbit.x - 1;	 //     1
-			Teewee.suboriginbit_0.y = Teewee.originbit.y;		 // [1] 1 1
-
-			Teewee.suboriginbit_1.x = Teewee.originbit.x + 1;	 //	  1
-			Teewee.suboriginbit_1.y = Teewee.originbit.y;		 // 1 1 [1]
-
-			Teewee.suboriginbit_2.x = Teewee.originbit.x;	     //	 [1]
-			Teewee.suboriginbit_2.y = Teewee.originbit.y+1; 	 // 1 1 1
+			Teewee = transform_rotation(Teewee, Teewee.Rotation);
 			return Teewee;
 
 			break;
@@ -152,31 +126,43 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Smashboy.suboriginbit_0.x = Smashboy.originbit.x + 1;	 //  1  1
-			Smashboy.suboriginbit_0.y = Smashboy.originbit.y;		 //  1 [1]
-
-			Smashboy.suboriginbit_1.x = Smashboy.originbit.x;		 //	[1] 1
-			Smashboy.suboriginbit_1.y = Smashboy.originbit.y + 1;	 //  1  1
-
-			Smashboy.suboriginbit_2.x = Smashboy.originbit.x + 1;	 //	1 [1]
-			Smashboy.suboriginbit_2.y = Smashboy.originbit.y + 1; 	 // 1  1
+			Smashboy = transform_rotation(Smashboy, Smashboy.Rotation);
 			return Smashboy;
 
 			break;
 		default:
-			return;
+			Object null = {0};
+			return null;
 	}
 }
 
-void shift_Left(Object object){
-
+Object shift_Left(Object object){
+	Object temp = object;
+	object.originbit.x -= 1;
+	object.suboriginbit_0.x -= 1;
+	object.suboriginbit_1.x -= 1;
+	object.suboriginbit_2.x -= 1;
+	if(check_State(object)) {
+		return temp;
+	} else {
+		return object;
+	}
 }
 
-void shift_Right(Object object){
-
+Object shift_Right(Object object){
+	Object temp = object;
+	object.originbit.x += 1;
+	object.suboriginbit_0.x += 1;
+	object.suboriginbit_1.x += 1;
+	object.suboriginbit_2.x += 1;
+	if(check_State(object)) {
+		return temp;
+	} else {
+		return object;
+	}
 }
 
-void transform_rotation(Object object, rotation new_rotation){
+Object transform_rotation(Object object, rotation new_rotation){
 	Object temp = object;
 	switch(object.name){
 		case(ORICKY):
@@ -197,7 +183,7 @@ void transform_rotation(Object object, rotation new_rotation){
 						//   [1]
 						//    1
 					object.suboriginbit_0.x = object.originbit.x;
-					object.suboriginbit_0.y = object.originbit.y-1;
+					object.suboriginbit_0.y = object.originbit.y - 1;
 
 					object.suboriginbit_1.x = object.originbit.x;
 					object.suboriginbit_1.y = object.originbit.y + 1;
@@ -208,11 +194,27 @@ void transform_rotation(Object object, rotation new_rotation){
 				case(ROTATION_2):
 						// 1  [1]  1
 						// 1
+					object.suboriginbit_0.x = object.originbit.x + 1;
+					object.suboriginbit_0.y = object.originbit.y;
+
+					object.suboriginbit_1.x = object.originbit.x - 1;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x - 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 
 				case(ROTATION_3):
 						//  1
 						// [1]
 						//  1 1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y + 1;
+
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x + 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 			}
 			break;
 		case(BRICKY):
@@ -232,21 +234,45 @@ void transform_rotation(Object object, rotation new_rotation){
 						// 1 1
 						//[1]
 						// 1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y;
 				case(ROTATION_2):
 						// 1 [1] 1
 						//       1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y;
 				case(ROTATION_3):
 						//   1
 						//  [1]
 						// 1 1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y;
+
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y;
 			}
 
 			break;
 		case(CLEVELAND):
 			switch(new_rotation) {
 				case(ROTATION_0):
+						// 1 1
+						//  [1] 1
 					object.suboriginbit_0.x = object.originbit.x;			 //	1 [1]
 					object.suboriginbit_0.y = object.originbit.y + 1;		 //    1 1
 
@@ -254,17 +280,49 @@ void transform_rotation(Object object, rotation new_rotation){
 					object.suboriginbit_1.y = object.originbit.y + 1;		 //     1 1
 
 					object.suboriginbit_2.x = object.originbit.x + 1;		 //  1 1
-					object.suboriginbit_2.y = object.originbit.y; 	     //    1 [1]
+					object.suboriginbit_2.y = object.originbit.y; 	     	//    1 [1]
 				case(ROTATION_1):
+						//     1
+						// [1] 1
+						//  1
+					object.suboriginbit_0.x = object.originbit.x+1;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x+1;
+					object.suboriginbit_1.y = object.originbit.y+1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y-1;
 				case(ROTATION_2):
+						// 1 [1]
+						//    1  1
+					object.suboriginbit_0.x = object.originbit.x - 1;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x + 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 				case(ROTATION_3):
+						//     1
+						//  1 [1]
+						//  1
+					object.suboriginbit_0.x = object.originbit.x - 1;
+					object.suboriginbit_0.y = object.originbit.y;
+
+					object.suboriginbit_1.x = object.originbit.x - 1;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y + 1;
 			}
 			break;
 		case(RHODE):
 			switch(new_rotation) {
 				case(ROTATION_0):
+						//    1 1
+						// 1 [1]
 					object.suboriginbit_0.x = object.originbit.x;			 //	  [1] 1
 					object.suboriginbit_0.y = object.originbit.y + 1;		 //  1 1
 
@@ -274,15 +332,46 @@ void transform_rotation(Object object, rotation new_rotation){
 					object.suboriginbit_2.x = object.originbit.x - 1;		 //     1 1
 					object.suboriginbit_2.y = object.originbit.y; 	     // [1] 1
 				case(ROTATION_1):
+						// 1
+						//[1] 1
+						//    1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y + 1;
 
+					object.suboriginbit_1.x = object.originbit.x + 1;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x + 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 				case(ROTATION_2):
+						//  [1] 1
+						// 1 1
+					object.suboriginbit_0.x = object.originbit.x + 1;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x - 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 				case(ROTATION_3):
+						// 1
+						// 1 [1]
+						//    1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y - 1;
+
+					object.suboriginbit_1.x = object.originbit.x - 1;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x - 1;
+					object.suboriginbit_2.y = object.originbit.y + 1;
 			}
 			break;
 		case(HERO):
 			switch(new_rotation) {
 				case(ROTATION_0):
+						// 1 1 [1] 1
 					object.suboriginbit_0.x = object.originbit.x - 1;	 //
 					object.suboriginbit_0.y = object.originbit.y;		 // 1 [1] 1 1
 
@@ -292,16 +381,49 @@ void transform_rotation(Object object, rotation new_rotation){
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //
 					object.suboriginbit_2.y = object.originbit.y; 	     //  1 1 1 [1]
 				case(ROTATION_1):
+						//  1
+						//  1
+						// [1]
+						//  1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y + 1;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y + 2;
 				case(ROTATION_2):
+						// 1 [1] 1 1
+					object.suboriginbit_0.x = object.originbit.x - 1;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x + 1;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x + 2;
+					object.suboriginbit_2.y = object.originbit.y;
 				case(ROTATION_3):
+						//  1
+						// [1]
+						//  1
+						//  1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y + 1;
+
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y - 1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y - 2;
 			}
 
 			break;
 		case(TEEWEE):
 			switch(new_rotation) {
 				case(ROTATION_0):
+						//    1
+						// 1 [1] 1
 					object.suboriginbit_0.x = object.originbit.x - 1;	 //     1
 					object.suboriginbit_0.y = object.originbit.y;		 // [1] 1 1
 
@@ -309,12 +431,42 @@ void transform_rotation(Object object, rotation new_rotation){
 					object.suboriginbit_1.y = object.originbit.y;		 // 1 1 [1]
 
 					object.suboriginbit_2.x = object.originbit.x;	     //	 [1]
-					object.suboriginbit_2.y = object.originbit.y+1; 	 // 1 1 1
+					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1 1 1
 				case(ROTATION_1):
+						//  1
+						// [1] 1
+						//  1
+					object.suboriginbit_0.x = object.originbit.x + 1;
+					object.suboriginbit_0.y = object.originbit.y;
 
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y + 1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 				case(ROTATION_2):
+						// 1 [1] 1
+						//    1
+					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.y = object.originbit.y - 1;
 
+					object.suboriginbit_1.x = object.originbit.x + 1;
+					object.suboriginbit_1.y = object.originbit.y;
+
+					object.suboriginbit_2.x = object.originbit.x - 1;
+					object.suboriginbit_2.y = object.originbit.y;
 				case(ROTATION_3):
+						//    1
+						// 1 [1]
+						//    1
+					object.suboriginbit_0.x = object.originbit.x - 1;
+					object.suboriginbit_0.y = object.originbit.y;
+
+					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.y = object.originbit.y + 1;
+
+					object.suboriginbit_2.x = object.originbit.x;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 			}
 
 			break;
@@ -331,16 +483,44 @@ void transform_rotation(Object object, rotation new_rotation){
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
 				case(ROTATION_1):
 
-				case(ROTATION_2):
+					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
+					object.suboriginbit_0.y = object.originbit.y;		 //  1 [1]
 
+					object.suboriginbit_1.x = object.originbit.x;		 //	[1] 1
+					object.suboriginbit_1.y = object.originbit.y + 1;	 //  1  1
+
+					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
+					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
+				case(ROTATION_2):
+					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
+					object.suboriginbit_0.y = object.originbit.y;		 //  1 [1]
+
+					object.suboriginbit_1.x = object.originbit.x;		 //	[1] 1
+					object.suboriginbit_1.y = object.originbit.y + 1;	 //  1  1
+
+					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
+					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
 				case(ROTATION_3):
+
+					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
+					object.suboriginbit_0.y = object.originbit.y;		 //  1 [1]
+
+					object.suboriginbit_1.x = object.originbit.x;		 //	[1] 1
+					object.suboriginbit_1.y = object.originbit.y + 1;	 //  1  1
+
+					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
+					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
 			}
-			break;
+		break;
 	}
 
-}
-
-uint8_t check_State(Object object){
+	if(check_State(object)) {
+		return object;
+	} else if (check_State(object) == 1){
+		return temp; //////////************ NNNNEEEEDD TO SAY IF IT HITS BOTTOM////////////
+	} else {
+		return temp;
+	}
 
 }
 

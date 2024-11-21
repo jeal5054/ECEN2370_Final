@@ -47,10 +47,6 @@ typedef enum { // Orioinal Names of Tetris blocks
 	RHODE,
 	HERO,
 	TEEWEE,
-
-	/*    1 1
-	 *   [1]1
-	 */
 	SMASHBOY
 } Tetris_name;
 
@@ -84,11 +80,11 @@ typedef struct {
  Equations used for matrix manipulation of variable
 *******/
 void RND_NUM(void);
-Object object_Select(void);
-void shift_Left(Object object);
-void shift_Right(Object object);
-void transform_rotation(Object object, rotation new_rotation); // Rotating the object
 uint8_t check_State(Object object); // Essentially passing in an object that has be transformed to see if it violates issues
+Object object_Select(void);
+Object shift_Left(Object object);
+Object shift_Right(Object object);
+Object transform_rotation(Object object, rotation new_rotation); // Rotating the object
 void update_Matrix(void);
 
 #endif /* INC_MATRIXDEF_H_ */
