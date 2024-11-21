@@ -46,10 +46,6 @@ typedef enum { // Orioinal Names of Tetris blocks
 	CLEVELAND,
 	RHODE,
 	HERO,
-
-	/*      1
-	 *    1[1]1
-	 */
 	TEEWEE,
 
 	/*    1 1
@@ -90,9 +86,9 @@ typedef struct {
 void RND_NUM(void);
 Object object_Select(void);
 void shift_Left(Object object);
-void shift_Right(void);
-void transform_Matrix(void);
-void check_State(void);
+void shift_Right(Object object);
+void transform_rotation(Object object, rotation new_rotation); // Rotating the object
+uint8_t check_State(Object object); // Essentially passing in an object that has be transformed to see if it violates issues
 void update_Matrix(void);
 
 #endif /* INC_MATRIXDEF_H_ */
