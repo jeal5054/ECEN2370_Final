@@ -37,9 +37,10 @@
  	 x-axis     0	1	2	3	4	5	6	7	8	9
  */
 
-static uint8_t RND_FLAG;
+//static uint8_t RND_FLAG;
 static uint8_t dummyTable[13][10];
 static uint32_t randomNumber;
+
 typedef enum { // Orioinal Names of Tetris blocks
 	ORICKY,
 	BRICKY,
@@ -74,17 +75,17 @@ typedef struct {
 /*
 	Equations for Verification and Preventing Errors
 */
-
+static Object object;
 
 /*******
  Equations used for matrix manipulation of variable
 *******/
 void RND_NUM(void);
-uint8_t check_State(Object object); // Essentially passing in an object that has be transformed to see if it violates issues
-Object object_Select(void);
-Object shift_Left(Object object);
-Object shift_Right(Object object);
-Object transform_rotation(Object object, rotation new_rotation); // Rotating the object
+uint8_t check_State(void); // Essentially passing in an object that has be transformed to see if it violates issues
+void object_Select(void);
+void shift_Left(void);
+void shift_Right(void);
+void transform_rotation(rotation new_rotation); // Rotating the object
 void update_Matrix(void);
 
 #endif /* INC_MATRIXDEF_H_ */

@@ -1,7 +1,0 @@
-../Core/Src/Matrixdef.c:9:6:RND_NUM	8	static
-../Core/Src/Matrixdef.c:23:9:check_State	24	static
-../Core/Src/Matrixdef.c:42:8:object_Select	120	static
-../Core/Src/Matrixdef.c:142:8:shift_Left	40	static
-../Core/Src/Matrixdef.c:155:8:shift_Right	40	static
-../Core/Src/Matrixdef.c:168:8:transform_rotation	40	static
-../Core/Src/Matrixdef.c:528:6:update_Matrix	4	static

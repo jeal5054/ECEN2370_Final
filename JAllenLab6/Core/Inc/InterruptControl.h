@@ -29,6 +29,27 @@
 #define NVIC_SET_PENDING_ADDR (0xE000E100 + 0x100)
 #define NVIC_CLEAR_PENDING_ADDR (0xE000E100 + 0x180)
 
+typedef struct {
+
+	volatile uint32_t MEMRMP;		// 0x00
+	volatile uint32_t PMC;			// 0x04
+	volatile uint32_t EXTICR[4];	// 0x08 - 0x14
+	volatile uint32_t reserved[2]; 	// 0x18-0x1c
+	volatile uint32_t CMPCR;		// 0x20
+
+} SYSCFG_RegDef_t;
+
+typedef struct {
+
+	volatile uint32_t IMR;		// 0x00
+	volatile uint32_t EMR;		// 0x04
+	volatile uint32_t RTSR;		// 0x08
+	volatile uint32_t FTSR;		// 0x0C
+	volatile uint32_t SWIER;	// 0x10
+	volatile uint32_t PR;		// 0x14
+
+} EXTI_RegDef_t;
+
 #define SYSCFG ((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDR)
 #define EXTI ((EXTI_RegDef_t *) EXTI_BASE_ADDR)
 
@@ -50,26 +71,5 @@ void Interrupt_Clear_Pending_EXTI(uint8_t pin);
 #define GPIO_CLK_DISABLE(addr_shift) (RCC->AHB1ENR &= ~(0x1 << addr_shift))
 #define SYSCFG_CLK_ENABLE() (RCC->APB2ENR |= (0x1 << SYSCFG_CLK_SHIFT))
 #define SYSCFG_CLK_DISABLE() (RCC->APB2ENR &= ~(0x1 << SYSCFG_CLK_SHIFT))
-
-typedef struct {
-
-	volatile uint32_t MEMRMP;		// 0x00
-	volatile uint32_t PMC;			// 0x04
-	volatile uint32_t EXTICR[4];	// 0x08 - 0x14
-	volatile uint32_t reserved[2]; 	// 0x18-0x1c
-	volatile uint32_t CMPCR;		// 0x20
-
-} SYSCFG_RegDef_t;
-
-typedef struct {
-
-	volatile uint32_t IMR;		// 0x00
-	volatile uint32_t EMR;		// 0x04
-	volatile uint32_t RTSR;		// 0x08
-	volatile uint32_t FTSR;		// 0x0C
-	volatile uint32_t SWIER;	// 0x10
-	volatile uint32_t PR;		// 0x14
-
-} EXTI_RegDef_t;
 
 #endif /* INTERRUPTCONTROL_H_ */

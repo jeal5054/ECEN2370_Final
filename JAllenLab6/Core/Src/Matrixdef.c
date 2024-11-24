@@ -18,25 +18,33 @@ void RND_NUM(void) {
 			while(1);
 		}
 	}
+	randomNumber = randomNumber % 7;
 }
 
-uint8_t check_State(Object object){
+uint8_t check_State(void) {
 	if(     (object.originbit.x <= 0) || (object.originbit.x >= 9) ||
 	   (object.suboriginbit_0.x <= 0) || (object.suboriginbit_0.x >= 9) ||
 	   (object.suboriginbit_1.x <= 0) || (object.suboriginbit_1.x >= 9) ||
 	   (object.suboriginbit_2.x <= 0) || (object.suboriginbit_2.x >= 9) )
 	{
-		return 0;
+		return 0; // This means object has gone outside of the bounds
 	} else if( (object.originbit.y <= 0)      || (object.suboriginbit_0.y <= 0) ||
 			   (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) )
 	{
-		return 1;
+		// initiate the ending protocal
+		// Place the object in the matrix, generate new object
+		dummyTable[object.originbit.x][object.originbit.y] = 1;
+		dummyTable[object.suboriginbit_0.x][object.suboriginbit_0.y] = 1;
+		dummyTable[object.suboriginbit_1.x][object.suboriginbit_1.y] = 1;
+		dummyTable[object.suboriginbit_2.x][object.suboriginbit_2.y] = 1;
+		object_Select();
+		return 1; // This means object has hit the button
 	} else {
-		return 2;
+		return 2; // In case we want to see nothing can be done
 	}
 }
 
-Object object_Select(void){
+void object_Select(void){
 	RND_NUM();
 	switch(randomNumber%7) {
 		case(ORICKY):
@@ -48,8 +56,8 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-		    Oricky = transform_rotation(Oricky, Oricky.Rotation);
-			return Oricky;
+			object = Oricky;
+		    transform_rotation(Oricky.Rotation);
 			break;
 
 		case(BRICKY):
@@ -61,8 +69,8 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Bricky = transform_rotation(Bricky, Bricky.Rotation);
-			return Bricky;
+			object = Bricky;
+			transform_rotation(Bricky.Rotation);
 			break;
 
 		case(CLEVELAND):
@@ -74,8 +82,8 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-		    Cleveland = transform_rotation(Cleveland, Cleveland.Rotation);
-			return Cleveland;
+			object = Cleveland;
+		    transform_rotation(Cleveland.Rotation);
 			break;
 
 		case(RHODE):
@@ -87,8 +95,8 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Rhode = transform_rotation(Rhode, Rhode.Rotation);
-			return Rhode;
+			object = Rhode;
+			transform_rotation(Rhode.Rotation);
 			break;
 
 		case(HERO):
@@ -100,8 +108,8 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Hero = transform_rotation(Hero, Hero.Rotation);
-			return Hero;
+			object = Hero;
+			transform_rotation(Hero.Rotation);
 			break;
 
 		case(TEEWEE):
@@ -113,10 +121,10 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Teewee = transform_rotation(Teewee, Teewee.Rotation);
-			return Teewee;
-
+			object = Teewee;
+			transform_rotation(Teewee.Rotation);
 			break;
+
 		case(SMASHBOY):
 			Object Smashboy = {
 				.name = SMASHBOY,
@@ -126,43 +134,36 @@ Object object_Select(void){
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
-			Smashboy = transform_rotation(Smashboy, Smashboy.Rotation);
-			return Smashboy;
-
+			object = Smashboy;
+			transform_rotation(Smashboy.Rotation);
 			break;
-		default:
-			Object null = {0};
-			return null;
+
 	}
 }
 
-Object shift_Left(Object object){
+void shift_Left(){
 	Object temp = object;
 	object.originbit.x -= 1;
 	object.suboriginbit_0.x -= 1;
 	object.suboriginbit_1.x -= 1;
 	object.suboriginbit_2.x -= 1;
-	if(check_State(object)) {
-		return temp;
-	} else {
-		return object;
+	if(check_State()) {
+		object = temp;
 	}
 }
 
-Object shift_Right(Object object){
+void shift_Right(){
 	Object temp = object;
 	object.originbit.x += 1;
 	object.suboriginbit_0.x += 1;
 	object.suboriginbit_1.x += 1;
 	object.suboriginbit_2.x += 1;
-	if(check_State(object)) {
-		return temp;
-	} else {
-		return object;
+	if(check_State()) {
+		object = temp;
 	}
 }
 
-Object transform_rotation(Object object, rotation new_rotation){
+void transform_rotation(rotation new_rotation){
 	Object temp = object;
 	switch(object.name){
 		case(ORICKY):
@@ -514,12 +515,10 @@ Object transform_rotation(Object object, rotation new_rotation){
 		break;
 	}
 
-	if(check_State(object)) {
-		return object;
-	} else if (check_State(object) == 1){
-		return temp; //////////************ NNNNEEEEDD TO SAY IF IT HITS BOTTOM////////////
-	} else {
-		return temp;
+
+
+	if (check_State() == 0) {
+		object = temp;
 	}
 
 }

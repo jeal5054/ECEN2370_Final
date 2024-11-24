@@ -107,7 +107,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  if(eventsToRun && MATRIX_UPDATE_EVENT) {update_Matrix();}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

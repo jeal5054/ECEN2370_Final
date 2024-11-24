@@ -12,7 +12,7 @@
 
 #define LED_TOGGLE_EVENT (1 << 0)
 #define DELAY_TIME_EVENT (1 << 1)
-#define BUTTON_POLL_EVENT (1 << 2)
+#define MATRIX_UPDATE_EVENT (1 << 2)
 
 uint32_t getScheduledEvents();
 void addScheduledEvent(uint32_t event);
