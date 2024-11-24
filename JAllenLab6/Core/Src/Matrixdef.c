@@ -8,13 +8,22 @@
 
 #define MATRIX_LCD 0
 
-void RND_NUM(void) {
-	static RNG_HandleTypeDef hrng;
+void RND_NUM(void) { // issue here
+	uint32_t RND;
+	RNG_HandleTypeDef hrng;
 	hrng.Instance = RNG;
-	if (HAL_RNG_GenerateRandomNumber(&hrng, &randomNumber) != HAL_OK) {
+
+	if (HAL_RNG_Init(&hrng) != HAL_OK)
+	{
 		while(1);
 	}
-	randomNumber = randomNumber % 7;
+	  /* USER CODE BEGIN RNG_Init 2 */
+    if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
+    	// Handle the error (e.g., infinite loop or error logging)
+	    while (1);
+	}
+	   RND = RND % 7;  // Constrain the result to 0-6
+	   randomNumber = RND;
 }
 
 uint8_t check_State(void) {
@@ -41,7 +50,15 @@ uint8_t check_State(void) {
 }
 
 void object_Select(void){
-	RND_NUM();
+	/*
+	uint32_t RND;
+	if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
+		 // Handle the error (e.g., infinite loop or error logging)
+		   while (1);
+	}
+	RND = RND % 7;  // Constrain the result to 0-6
+	RND_NUM(RND);
+	*/
 	switch(randomNumber) {
 		case(ORICKY):
 			Object Oricky = {
@@ -175,6 +192,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	// 	  [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	// 1 1 1
+
+					break;
 				case(ROTATION_1):
 						// 1  1
 						//   [1]
@@ -188,6 +207,7 @@ void transform_rotation(rotation new_rotation){
 					object.suboriginbit_2.x = object.originbit.x - 1;
 					object.suboriginbit_2.y = object.originbit.y + 1;
 
+					break;
 				case(ROTATION_2):
 						// 1  [1]  1
 						// 1
@@ -200,6 +220,7 @@ void transform_rotation(rotation new_rotation){
 					object.suboriginbit_2.x = object.originbit.x - 1;
 					object.suboriginbit_2.y = object.originbit.y - 1;
 
+					break;
 				case(ROTATION_3):
 						//  1
 						// [1]
@@ -212,6 +233,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 			}
 			break;
 		case(BRICKY):
@@ -227,6 +250,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x - 1;	//[1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	// 1 1 1
+
+					break;
 				case(ROTATION_1):
 						// 1 1
 						//[1]
@@ -239,6 +264,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y;
+
+					break;
 				case(ROTATION_2):
 						// 1 [1] 1
 						//       1
@@ -250,6 +277,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y;
+
+					break;
 				case(ROTATION_3):
 						//   1
 						//  [1]
@@ -262,6 +291,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y;
+
+					break;
 			}
 
 			break;
@@ -278,6 +309,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;		 //  1 1
 					object.suboriginbit_2.y = object.originbit.y; 	     	//    1 [1]
+
+					break;
 				case(ROTATION_1):
 						//     1
 						// [1] 1
@@ -290,6 +323,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y-1;
+
+					break;
 				case(ROTATION_2):
 						// 1 [1]
 						//    1  1
@@ -301,6 +336,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 				case(ROTATION_3):
 						//     1
 						//  1 [1]
@@ -313,6 +350,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y + 1;
+
+					break;
 			}
 			break;
 		case(RHODE):
@@ -328,6 +367,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x - 1;		 //     1 1
 					object.suboriginbit_2.y = object.originbit.y; 	     // [1] 1
+
+					break;
 				case(ROTATION_1):
 						// 1
 						//[1] 1
@@ -340,6 +381,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 				case(ROTATION_2):
 						//  [1] 1
 						// 1 1
@@ -351,6 +394,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x - 1;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 				case(ROTATION_3):
 						// 1
 						// 1 [1]
@@ -363,6 +408,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x - 1;
 					object.suboriginbit_2.y = object.originbit.y + 1;
+
+					break;
 			}
 			break;
 		case(HERO):
@@ -377,6 +424,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //
 					object.suboriginbit_2.y = object.originbit.y; 	     //  1 1 1 [1]
+
+					break;
 				case(ROTATION_1):
 						//  1
 						//  1
@@ -390,6 +439,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y + 2;
+
+					break;
 				case(ROTATION_2):
 						// 1 [1] 1 1
 					object.suboriginbit_0.x = object.originbit.x - 1;
@@ -400,6 +451,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 2;
 					object.suboriginbit_2.y = object.originbit.y;
+
+					break;
 				case(ROTATION_3):
 						//  1
 						// [1]
@@ -413,6 +466,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y - 2;
+
+					break;
 			}
 
 			break;
@@ -429,6 +484,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;	     //	 [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1 1 1
+
+					break;
 				case(ROTATION_1):
 						//  1
 						// [1] 1
@@ -441,6 +498,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 				case(ROTATION_2):
 						// 1 [1] 1
 						//    1
@@ -452,6 +511,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x - 1;
 					object.suboriginbit_2.y = object.originbit.y;
+
+					break;
 				case(ROTATION_3):
 						//    1
 						// 1 [1]
@@ -464,6 +525,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x;
 					object.suboriginbit_2.y = object.originbit.y - 1;
+
+					break;
 			}
 
 			break;
@@ -478,6 +541,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
+
+					break;
 				case(ROTATION_1):
 
 					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
@@ -488,6 +553,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
+
+					break;
 				case(ROTATION_2):
 					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
 					object.suboriginbit_0.y = object.originbit.y;		 //  1 [1]
@@ -497,6 +564,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
+
+					break;
 				case(ROTATION_3):
 
 					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
@@ -507,6 +576,8 @@ void transform_rotation(rotation new_rotation){
 
 					object.suboriginbit_2.x = object.originbit.x + 1;	 //	1 [1]
 					object.suboriginbit_2.y = object.originbit.y + 1; 	 // 1  1
+
+					break;
 			}
 		break;
 	}

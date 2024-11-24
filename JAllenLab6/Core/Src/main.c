@@ -108,6 +108,7 @@ int main(void)
   MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
   uint32_t eventsToRun;
+  object_Select();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -311,12 +312,9 @@ static void MX_RNG_Init(void)
   /* USER CODE BEGIN RNG_Init 1 */
 
   /* USER CODE END RNG_Init 1 */
-  hrng.Instance = RNG;
-  if (HAL_RNG_Init(&hrng) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
   /* USER CODE BEGIN RNG_Init 2 */
+   RND_NUM();
 
   /* USER CODE END RNG_Init 2 */
 

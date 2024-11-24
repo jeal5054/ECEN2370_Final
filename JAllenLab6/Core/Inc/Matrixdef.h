@@ -9,6 +9,7 @@
 #define INC_MATRIXDEF_H_
 
 #include <stdint.h>
+#include <stdio.h>
 #include "stm32f4xx_hal.h"
 
 #define pixel_Width 24
