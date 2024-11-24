@@ -9,11 +9,11 @@
 #include "Matrixdef.h"
 
 void applicationInit(){
-
-	applicationInterruptInit();
+	//applicationInterruptInit();
 	addScheduledEvent(MATRIX_UPDATE_EVENT);
 }
 
+/*
 void applicationButtonInit() {
 	init_Button();
 }
@@ -41,4 +41,4 @@ void TIM2_IRQHandler() {
 }
 
 
-
+*/

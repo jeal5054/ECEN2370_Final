@@ -86,7 +86,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  applicationInit();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -103,7 +103,7 @@ int main(void)
   MX_RNG_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  uint32_t eventsToRun;
   /* USER CODE END 2 */
 
   /* Infinite loop */

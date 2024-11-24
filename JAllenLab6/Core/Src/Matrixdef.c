@@ -42,7 +42,7 @@ uint8_t check_State(void) {
 
 void object_Select(void){
 	RND_NUM();
-	switch(randomNumber%7) {
+	switch(randomNumber) {
 		case(ORICKY):
 			Object Oricky = {
 				.name = ORICKY,
