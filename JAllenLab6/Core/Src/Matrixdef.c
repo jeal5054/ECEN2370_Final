@@ -6,17 +6,13 @@
  */
 #include "Matrixdef.h"
 
+#define MATRIX_LCD 0
+
 void RND_NUM(void) {
 	static RNG_HandleTypeDef hrng;
-	if(RND_FLAG) {
-	  hrng.Instance = RNG;
-	  	if (HAL_RNG_Init(&hrng) != HAL_OK) {
-		  while(1);
-	    }
-	} else {
-		if (HAL_RNG_GenerateRandomNumber(&hrng, &randomNumber) != HAL_OK) {
-			while(1);
-		}
+	hrng.Instance = RNG;
+	if (HAL_RNG_GenerateRandomNumber(&hrng, &randomNumber) != HAL_OK) {
+		while(1);
 	}
 	randomNumber = randomNumber % 7;
 }
@@ -524,6 +520,40 @@ void transform_rotation(rotation new_rotation){
 }
 
 void update_Matrix(void){
+	dummyTable[object.originbit.y][object.originbit.x] = 1;
+	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
+	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
+	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
+#if MATRIX_LCD == 1
+	// Connect to the LCD screen and update that
+
+#elif MATRIX_LCD == 0
+	printf("Matrix Representation:\n");
+
+	// Print the table rows
+	for (int i = 0; i < ROWS; i++) {
+		printf("%3d|", i); // Print row index
+		for (int j = 0; j < COLS; j++) {
+			printf("%5d", dummyTable[i][j]); // Print table values
+		}
+		printf("\n");
+	}
+
+	// Print divider
+	printf("   +");
+	for (int j = 0; j < COLS; j++) {
+		printf("-----");
+	}
+	printf("\n");
+
+	// Print column labels
+	printf("%5s", " "); // Empty cell for alignment
+	for (int i = 0; i < COLS; i++) {
+		printf("%5d", i); // Print column indices
+	}
+	printf("\n");
+
+#endif
 
 }
 

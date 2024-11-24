@@ -16,20 +16,10 @@
 #define ACTIVE_INTERRUPT 1
 
 void applicationInit();
-void greenLEDInit();
-void redLEDInit();
-void toggleGreenLED();
-void toggleRedLED();
-void toggleLED();
-void activateGreenLED();
-void activateRedLED();
-void deactivateGreenLED();
-void deactivateRedLED();
 void appDelay(uint32_t delay);
 
 //button prototypes
 void applicationButtonInit();
-void executeButtonPollingRoutine();
 void applicationInterruptInit();
 
 #endif /* APPLICATIONCODE_H_ */

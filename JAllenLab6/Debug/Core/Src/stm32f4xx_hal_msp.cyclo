@@ -5,3 +5,7 @@
 ../Core/Src/stm32f4xx_hal_msp.c:290:6:HAL_LTDC_MspDeInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:352:6:HAL_RNG_MspInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:375:6:HAL_RNG_MspDeInit	2
+../Core/Src/stm32f4xx_hal_msp.c:397:6:HAL_TIM_Base_MspInit	2
+../Core/Src/stm32f4xx_hal_msp.c:423:6:HAL_TIM_Base_MspDeInit	2
+../Core/Src/stm32f4xx_hal_msp.c:444:6:HAL_GPIO_EXTI_Callback	2
+../Core/Src/stm32f4xx_hal_msp.c:453:6:HAL_TIM_PeriodElapsedCallback	2

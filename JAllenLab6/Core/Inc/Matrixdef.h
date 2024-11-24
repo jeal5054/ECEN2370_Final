@@ -14,7 +14,8 @@
 #define pixel_Width 24
 #define pixel_Length 24
 #define pixel_Area (pixel_Width*pixel_Length)
-
+#define ROWS 13
+#define COLS 10
 /*	MATRIX PLAN
  13x10 Grid, x = 0 starts at left screen
  	 	 	 y = 0 starts at bottom of screen
@@ -36,10 +37,6 @@
 
  	 x-axis     0	1	2	3	4	5	6	7	8	9
  */
-
-//static uint8_t RND_FLAG;
-static uint8_t dummyTable[13][10];
-static uint32_t randomNumber;
 
 typedef enum { // Orioinal Names of Tetris blocks
 	ORICKY,
@@ -76,6 +73,8 @@ typedef struct {
 	Equations for Verification and Preventing Errors
 */
 static Object object;
+static uint8_t dummyTable[13][10];
+static uint32_t randomNumber;
 
 /*******
  Equations used for matrix manipulation of variable
