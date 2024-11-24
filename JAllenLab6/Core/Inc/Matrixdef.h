@@ -72,6 +72,7 @@ typedef struct {
 /*
 	Equations for Verification and Preventing Errors
 */
+
 static Object object;
 static uint8_t dummyTable[13][10];
 static uint32_t randomNumber;

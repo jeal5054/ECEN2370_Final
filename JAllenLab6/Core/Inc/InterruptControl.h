@@ -50,8 +50,8 @@ typedef struct {
 
 } EXTI_RegDef_t;
 
-#define SYSCFG ((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDR)
-#define EXTI ((EXTI_RegDef_t *) EXTI_BASE_ADDR)
+//#define SYSCFG ((SYSCFG_RegDef_t *) SYSCFG_BASE_ADDR)
+#define EXTI_CUSTOM ((EXTI_RegDef_t *) EXTI_BASE_ADDR)
 
 #define NVIC_ISER0_SET_ENABLE ((volatile uint32_t*) NVIC_SET_ENABLE_ADDR)
 #define NVIC_ISER0_CLEAR_ENABLE ((volatile uint32_t*) NVIC_CLEAR_ENABLE_ADDR)

@@ -45,9 +45,9 @@ void Interrupt_Clear_Pending(uint8_t val) {
 void Interrupt_Clear_Pending_EXTI(uint8_t pin){
 	uint8_t IRQ_range = pin / 32;
 	if(~IRQ_range){
-		EXTI->PR |= (0x1 << pin);
+		EXTI_CUSTOM->PR |= (0x1 << pin);
 	} else {
-		EXTI->PR |= (0x1 << (pin%32));
+		EXTI_CUSTOM->PR |= (0x1 << (pin%32));
 	}
 }
 
