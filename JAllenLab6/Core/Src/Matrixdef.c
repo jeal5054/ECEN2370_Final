@@ -524,32 +524,30 @@ void update_Matrix(void){
 	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
 	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
 	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
+
 #if MATRIX_LCD == 1
 	// Connect to the LCD screen and update that
 
 #elif MATRIX_LCD == 0
 	printf("Matrix Representation:\n");
 
-	// Print the table rows
 	for (int i = 0; i < ROWS; i++) {
-		printf("%3d|", i); // Print row index
+		printf("%3d|", i);
 		for (int j = 0; j < COLS; j++) {
-			printf("%5d", dummyTable[i][j]); // Print table values
+			printf("%5d", dummyTable[i][j]);
 		}
 		printf("\n");
 	}
 
-	// Print divider
 	printf("   +");
 	for (int j = 0; j < COLS; j++) {
 		printf("-----");
 	}
 	printf("\n");
 
-	// Print column labels
-	printf("%5s", " "); // Empty cell for alignment
+	printf("%5s", " ");
 	for (int i = 0; i < COLS; i++) {
-		printf("%5d", i); // Print column indices
+		printf("%5d", i);
 	}
 	printf("\n");
 
