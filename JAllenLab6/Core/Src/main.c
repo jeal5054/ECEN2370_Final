@@ -89,7 +89,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  applicationInit();
+  //applicationInit();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -107,8 +107,9 @@ int main(void)
   MX_TIM2_Init();
   MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
+  applicationInit();
   uint32_t eventsToRun;
-  object_Select();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -116,7 +117,7 @@ int main(void)
   while (1)
   {
 	 eventsToRun = getScheduledEvents();
-	 if(eventsToRun && MATRIX_UPDATE_EVENT) {update_Matrix();}
+	 if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
   }
   /* USER CODE END 3 */
 }

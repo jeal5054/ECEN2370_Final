@@ -511,30 +511,15 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
 // Interrupt callback function
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_0) {  // Button pin
-    	// Send flag to rotate stuff
-    	rotation new_rotation = object.Rotation + 1;
-    	transform_rotation(new_rotation);
+    	// rotate stuff
+    	transform_rotation();
     }
 }
 
 // Interrupt callback function
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM2) {
-        // erase the previous state
-    	dummyTable[object.originbit.y][object.originbit.x] = 0;
-		dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
-		dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
-		dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
-		// create the new object location
-    	object.originbit.y -= 1;
-    	object.suboriginbit_0.y -= 1;
-    	object.suboriginbit_1.y -= 1;
-    	object.suboriginbit_2.y -= 1;
-    	// draw the new state
-    	dummyTable[object.originbit.y][object.originbit.x] = 1;
-    	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
-    	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
-    	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
+    	tick_Matrix();
     }
 }
 /* USER CODE END 1 */

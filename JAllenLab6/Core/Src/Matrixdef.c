@@ -50,108 +50,103 @@ uint8_t check_State(void) {
 }
 
 void object_Select(void){
-	/*
-	uint32_t RND;
-	if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
-		 // Handle the error (e.g., infinite loop or error logging)
-		   while (1);
-	}
-	RND = RND % 7;  // Constrain the result to 0-6
-	RND_NUM(RND);
-	*/
+
+	RND_NUM();
+	Matrix_clear();
 	switch(randomNumber) {
 		case(ORICKY):
 			Object Oricky = {
 				.name = ORICKY,
-				.Rotation = ROTATION_0,			  //       1
-				.originbit = { .x = 5, .y = 12 }, // 1 [1] 1
+				.Rotation = ROTATION_0 - 1,			  //       1
+				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
 				.suboriginbit_0 = {0, 0}, 
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Oricky;
-		    transform_rotation(Oricky.Rotation);
+		    transform_rotation();
 			break;
 
 		case(BRICKY):
 			Object Bricky = {
 				.name = BRICKY,
-				.Rotation = ROTATION_0,           // 1
-				.originbit = { .x = 5, .y = 12 }, // 1 [1] 1
+				.Rotation = ROTATION_0 - 1,           // 1
+				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
 				.suboriginbit_0 = {0, 0}, 
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Bricky;
-			transform_rotation(Bricky.Rotation);
+			transform_rotation();
 			break;
 
 		case(CLEVELAND):
 			Object Cleveland = {
 				.name = CLEVELAND,
-				.Rotation = ROTATION_0,           //   1 1
-				.originbit = { .x = 5, .y = 12 }, //    [1] 1
+				.Rotation = ROTATION_0 - 1,           //   1 1
+				.originbit = { .x = 5, .y = 12 }, 	  //    [1] 1
 				.suboriginbit_0 = {0, 0},  
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Cleveland;
-		    transform_rotation(Cleveland.Rotation);
+		    transform_rotation();
 			break;
 
 		case(RHODE):
 			Object Rhode = {
 				.name = RHODE,
-				.Rotation = ROTATION_0,           //        1 1
-				.originbit = { .x = 5, .y = 12 }, //     1 [1]
+				.Rotation = ROTATION_0 - 1,           //        1 1
+				.originbit = { .x = 5, .y = 12 },     //     1 [1]
 				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Rhode;
-			transform_rotation(Rhode.Rotation);
+			transform_rotation();
 			break;
 
 		case(HERO):
 			Object Hero = {
 				.name = HERO,
-				.Rotation = ROTATION_0,          			 //
+				.Rotation = ROTATION_0 - 1,          	     //
 				.originbit = { .x = 5, .y = 12 }, 			 //  1 1 [1] 1
 				.suboriginbit_0 = {0, 0}, 
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Hero;
-			transform_rotation(Hero.Rotation);
+			transform_rotation();
 			break;
 
 		case(TEEWEE):
 			Object Teewee = {
 				.name = TEEWEE,
-				.Rotation = ROTATION_0,          			 	//    1
+				.Rotation = ROTATION_0 - 1,          			//    1
 				.originbit = { .x = 5, .y = 12 }, 			 	// 1 [1] 1
 				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Teewee;
-			transform_rotation(Teewee.Rotation);
+			transform_rotation();
 			break;
 
 		case(SMASHBOY):
 			Object Smashboy = {
 				.name = SMASHBOY,
-				.Rotation = ROTATION_0,          			 	// 1  1
+				.Rotation = ROTATION_0 - 1,          			// 1  1
 				.originbit = { .x = 5, .y = 12 }, 			 	//[1] 1
 				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Smashboy;
-			transform_rotation(Smashboy.Rotation);
+			transform_rotation();
 			break;
 
 	}
+	Matrix_update();
 }
 
 void shift_Left(){
@@ -176,11 +171,17 @@ void shift_Right(){
 	}
 }
 
-void transform_rotation(rotation new_rotation){
+void transform_rotation(){
+	Matrix_clear();
 	Object temp = object;
+	object.Rotation += 1;
+	if((object.Rotation > 3) || (object.Rotation < 0)) {
+		object.Rotation = 0;
+	}
+
 	switch(object.name){
 		case(ORICKY):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						//       1
 						// 1 [1] 1
@@ -238,7 +239,7 @@ void transform_rotation(rotation new_rotation){
 			}
 			break;
 		case(BRICKY):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						// 1
 						// 1 [1] 1
@@ -297,7 +298,7 @@ void transform_rotation(rotation new_rotation){
 
 			break;
 		case(CLEVELAND):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						// 1 1
 						//  [1] 1
@@ -355,7 +356,7 @@ void transform_rotation(rotation new_rotation){
 			}
 			break;
 		case(RHODE):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						//    1 1
 						// 1 [1]
@@ -413,7 +414,7 @@ void transform_rotation(rotation new_rotation){
 			}
 			break;
 		case(HERO):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						// 1 1 [1] 1
 					object.suboriginbit_0.x = object.originbit.x - 1;	 //
@@ -472,7 +473,7 @@ void transform_rotation(rotation new_rotation){
 
 			break;
 		case(TEEWEE):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 						//    1
 						// 1 [1] 1
@@ -531,7 +532,7 @@ void transform_rotation(rotation new_rotation){
 
 			break;
 		case(SMASHBOY):
-			switch(new_rotation) {
+			switch(object.Rotation) {
 				case(ROTATION_0):
 					object.suboriginbit_0.x = object.originbit.x + 1;	 //  1  1
 					object.suboriginbit_0.y = object.originbit.y;		 //  1 [1]
@@ -582,27 +583,32 @@ void transform_rotation(rotation new_rotation){
 		break;
 	}
 
-
-
 	if (check_State() == 0) {
 		object = temp;
 	}
+	Matrix_update();
 
 }
 
-void update_Matrix(void){
-	dummyTable[object.originbit.y][object.originbit.x] = 1;
-	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
-	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
-	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
-
+void tick_Matrix(void){
+	 // erase the previous state
+	Matrix_clear();
+	// create the new object location
+	object.originbit.y -= 1;
+	object.suboriginbit_0.y -= 1;
+	object.suboriginbit_1.y -= 1;
+	object.suboriginbit_2.y -= 1;
+	// draw the new state
+	Matrix_update();
+}
+void printMatrix(void){
 #if MATRIX_LCD == 1
 	// Connect to the LCD screen and update that
 
 #elif MATRIX_LCD == 0
 	printf("Matrix Representation:\n");
 
-	for (int i = 0; i < ROWS; i++) {
+	for (int i = ROWS; i > -1; i--) {
 		printf("%3d|", i);
 		for (int j = 0; j < COLS; j++) {
 			printf("%5d", dummyTable[i][j]);
@@ -623,6 +629,17 @@ void update_Matrix(void){
 	printf("\n");
 
 #endif
-
 }
 
+void Matrix_clear(void) {
+	dummyTable[object.originbit.y][object.originbit.x] = 0;
+	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
+	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
+	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
+}
+void Matrix_update(void){
+	dummyTable[object.originbit.y][object.originbit.x] = 1;
+	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
+	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
+	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
+}

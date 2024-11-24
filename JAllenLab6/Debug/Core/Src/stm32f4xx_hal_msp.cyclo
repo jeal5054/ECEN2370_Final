@@ -10,4 +10,4 @@
 ../Core/Src/stm32f4xx_hal_msp.c:465:6:HAL_TIM_Base_MspInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:491:6:HAL_TIM_Base_MspDeInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:512:6:HAL_GPIO_EXTI_Callback	2
-../Core/Src/stm32f4xx_hal_msp.c:521:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/stm32f4xx_hal_msp.c:520:6:HAL_TIM_PeriodElapsedCallback	2

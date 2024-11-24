@@ -9,5 +9,5 @@
 ../Core/Src/stm32f4xx_hal_msp.c:435:6:HAL_SPI_MspDeInit	16	static
 ../Core/Src/stm32f4xx_hal_msp.c:465:6:HAL_TIM_Base_MspInit	24	static
 ../Core/Src/stm32f4xx_hal_msp.c:491:6:HAL_TIM_Base_MspDeInit	16	static
-../Core/Src/stm32f4xx_hal_msp.c:512:6:HAL_GPIO_EXTI_Callback	24	static
-../Core/Src/stm32f4xx_hal_msp.c:521:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/stm32f4xx_hal_msp.c:512:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/stm32f4xx_hal_msp.c:520:6:HAL_TIM_PeriodElapsedCallback	16	static

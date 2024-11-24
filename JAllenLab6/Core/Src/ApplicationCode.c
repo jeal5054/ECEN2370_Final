@@ -10,6 +10,7 @@
 
 void applicationInit(){
 	//applicationInterruptInit();
+	object_Select();
 	addScheduledEvent(MATRIX_UPDATE_EVENT);
 }
 
