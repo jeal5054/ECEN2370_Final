@@ -8,7 +8,8 @@
 #ifndef SCHEDULER_H_
 #define SCHEDULER_H_
 
-#include <stdint.h>
+//#include <stdint.h>
+#include "Matrixdef.h"
 
 #define LED_TOGGLE_EVENT (1 << 0)
 #define DELAY_TIME_EVENT (1 << 1)

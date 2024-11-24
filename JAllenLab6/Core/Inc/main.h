@@ -27,8 +27,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
-#include "Matrixdef.h"
+//#include "stm32f4xx_hal.h"
+//#include "Matrixdef.h"
 #include "ApplicationCode.h"
 //#include "Scheduler.h"
 

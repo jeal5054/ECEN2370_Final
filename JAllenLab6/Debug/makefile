@@ -61,7 +61,7 @@ main-build: JAllenLab6.elf secondary-outputs
 
 # Tool invocations
 JAllenLab6.elf JAllenLab6.map: $(OBJS) $(USER_OBJS) /Users/jeffreya181/Desktop/ECEN2370_Final/JAllenLab6/STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "JAllenLab6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/jeffreya181/Desktop/ECEN2370_Final/JAllenLab6/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="JAllenLab6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "JAllenLab6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/jeffreya181/Desktop/ECEN2370_Final/JAllenLab6/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="JAllenLab6.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
