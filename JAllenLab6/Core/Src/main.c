@@ -50,6 +50,7 @@ RNG_HandleTypeDef hrng;
 SPI_HandleTypeDef hspi5;
 
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim5;
 
 /* USER CODE BEGIN PV */
 
@@ -63,6 +64,7 @@ static void MX_I2C3_Init(void);
 static void MX_RNG_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_SPI5_Init(void);
+static void MX_TIM5_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -81,6 +83,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
   initialise_monitor_handles();
+  uint32_t start_time, end_time, total_time;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,28 +103,49 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
   MX_GPIO_Init();
   MX_LTDC_Init();
   MX_I2C3_Init();
   MX_RNG_Init();
   MX_TIM2_Init();
   MX_SPI5_Init();
+  MX_TIM5_Init();
+
   /* USER CODE BEGIN 2 */
+
   applicationInit();
   uint32_t eventsToRun;
+  START_SCREEN();
 
   /* USER CODE END 2 */
+
+  uint32_t game_ender = 0;
   uint8_t BUTTON_START = 0;
   while(!BUTTON_START) {
 	  BUTTON_START = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0); // read button by polling
   }
+  start_time = __HAL_TIM_GET_COUNTER(&htim5);
+
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-	 eventsToRun = getScheduledEvents();
-	 if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
-  }
+   {
+	  eventsToRun = getScheduledEvents();
+	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
+	  else {
+		end_time = __HAL_TIM_GET_COUNTER(&htim5);
+		total_time = (end_time - start_time)/1000;
+		GAME_OVER(total_time);
+	  }
+
+	  // Just for testing elapsed time
+	  game_ender++;
+	  if(game_ender > 30) {
+		  removeSchedulerEvent(MATRIX_UPDATE_EVENT);
+	  }
+   }
   /* USER CODE END 3 */
 }
 
@@ -316,7 +340,11 @@ static void MX_RNG_Init(void)
   /* USER CODE BEGIN RNG_Init 1 */
 
   /* USER CODE END RNG_Init 1 */
-
+  hrng.Instance = RNG;
+  if (HAL_RNG_Init(&hrng) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN RNG_Init 2 */
    RND_NUM();
 
@@ -383,7 +411,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_DOWN;
-  htim2.Init.Period = 15999999;//47999997;//15999999;
+  htim2.Init.Period = 15999999;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -406,6 +434,51 @@ static void MX_TIM2_Init(void)
       Error_Handler(); // Handle errors appropriately
   }
   /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief TIM5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM5_Init(void)
+{
+
+  /* USER CODE BEGIN TIM5_Init 0 */
+
+  /* USER CODE END TIM5_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM5_Init 1 */
+
+  /* USER CODE END TIM5_Init 1 */
+  htim5.Instance = TIM5;
+  htim5.Init.Prescaler = 0;
+  htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim5.Init.Period = 4294967295;
+  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim5, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim5, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM5_Init 2 */
+  HAL_TIM_Base_Start(&htim5);
+  /* USER CODE END TIM5_Init 2 */
 
 }
 

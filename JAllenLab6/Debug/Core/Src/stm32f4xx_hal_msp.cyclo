@@ -7,7 +7,7 @@
 ../Core/Src/stm32f4xx_hal_msp.c:375:6:HAL_RNG_MspDeInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:397:6:HAL_SPI_MspInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:435:6:HAL_SPI_MspDeInit	2
-../Core/Src/stm32f4xx_hal_msp.c:465:6:HAL_TIM_Base_MspInit	2
-../Core/Src/stm32f4xx_hal_msp.c:491:6:HAL_TIM_Base_MspDeInit	2
-../Core/Src/stm32f4xx_hal_msp.c:512:6:HAL_GPIO_EXTI_Callback	2
-../Core/Src/stm32f4xx_hal_msp.c:520:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/stm32f4xx_hal_msp.c:465:6:HAL_TIM_Base_MspInit	3
+../Core/Src/stm32f4xx_hal_msp.c:501:6:HAL_TIM_Base_MspDeInit	3
+../Core/Src/stm32f4xx_hal_msp.c:533:6:HAL_GPIO_EXTI_Callback	2
+../Core/Src/stm32f4xx_hal_msp.c:541:6:HAL_TIM_PeriodElapsedCallback	2

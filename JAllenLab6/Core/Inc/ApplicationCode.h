@@ -9,6 +9,7 @@
 #define APPLICATIONCODE_H_
 
 #include "Scheduler.h"
+#include "Matrixdef.h"
 
 void applicationInit();
 

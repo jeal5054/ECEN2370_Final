@@ -5,8 +5,7 @@
  *      Author: jeffreya181
  */
 #include "ApplicationCode.h"
-#include "InterruptControl.h"
-#include "Matrixdef.h"
+
 
 void applicationInit(){
 	//applicationInterruptInit();

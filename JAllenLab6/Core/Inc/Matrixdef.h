@@ -15,8 +15,8 @@
 #define pixel_Width 24
 #define pixel_Length 24
 #define pixel_Area (pixel_Width*pixel_Length)
-#define ROWS 12
-#define COLS 9
+#define ROWS 13
+#define COLS 10
 /*	MATRIX PLAN
  13x10 Grid, x = 0 starts at left screen
  	 	 	 y = 0 starts at bottom of screen
@@ -71,12 +71,15 @@ typedef struct {
 } Object;
 
 static Object object;
-static uint8_t dummyTable[13][10];
+static uint8_t dummyTable[ROWS][COLS];
 static uint32_t randomNumber;
 
 /*******
  Functions used for matrix manipulation of variable
 *******/
+void START_SCREEN(void);
+void GAME_OVER(uint32_t total_time);
+
 void RND_NUM(void);
 uint8_t check_State(void); // Essentially passing in an object that has be transformed to see if it violates issues
 void object_Select(void);

@@ -8,6 +8,111 @@
 
 #define MATRIX_LCD 0
 
+void START_SCREEN(void){
+#if MATRIX_LCD == 1
+
+#else
+	int rows = 13, cols = 10;  // Width set to 10
+	    char matrix_enc[13][10];
+
+	    // Initialize the matrix with spaces
+	    for (int i = 0; i < rows; i++) {
+	        for (int j = 0; j < cols; j++) {
+	            matrix_enc[i][j] = ' ';
+	        }
+	    }
+
+	    // Add text to the matrix (manually adjusting for 10 columns)
+	    const char lines[13][10] = {
+	        "          ",
+	        "          ",
+	        "  TETRIS  ",
+	        "          ",
+	        "          ",
+	        "   PRESS  ",
+	        "          ",
+	        "  BUTTON  ",
+	        "          ",
+	        "    TO    ",
+	        "          ",
+	        "   START  ",
+	        "          "
+	    };
+
+	    // Copy the text into the matrix
+	    for (int i = 0; i < rows; i++) {
+	        for (int j = 0; j < cols; j++) {
+	            matrix_enc[i][j] = lines[i][j];
+	        }
+	    }
+
+	    // Print the matrix
+	    for (int i = 0; i < rows; i++) {
+	        for (int j = 0; j < cols; j++) {
+	            printf("%c", matrix_enc[i][j]);
+	        }
+	        printf("\n");
+	    }
+#endif
+}
+
+void GAME_OVER(uint32_t total_time) { // code for displaying game over
+#if MATRIX_LCD == 1
+
+#else
+	char matrix_enc[ROWS][COLS];
+
+		// Initialize the matrix with spaces
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				matrix_enc[i][j] = ' ';
+			}
+		}
+
+		// Add text to the matrix (manually adjusting for 10 columns)
+		const char lines[ROWS][COLS] = {
+			"          ",
+			"          ",
+			"   GAME   ",
+			"          ",
+			"   OVER   ",
+			"          ",
+			"          ",
+			"   TIME:  ",
+			"          ",
+			"   --:--  ",
+			"          ",
+			"          ",
+			"          "
+		};
+
+		// update Matrix
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				matrix_enc[i][j] = lines[i][j];
+			}
+		}
+
+		// Format the total time (in minutes and seconds)
+		uint32_t minutes = total_time / 60;
+		uint32_t seconds = total_time % 60;
+
+		// display time
+		matrix_enc[9][3] = (minutes / 10) + '0';  // Ten minutes
+		matrix_enc[9][4] = (minutes % 10) + '0';  // minutes
+		matrix_enc[9][5] = ':';
+		matrix_enc[9][6] = (seconds / 10) + '0';  //tens
+		matrix_enc[9][7] = (seconds % 10) + '0';  //single seconds
+
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				printf("%c", matrix_enc[i][j]);
+			}
+			printf("\n");
+		}
+#endif
+}
+
 void RND_NUM(void) { // issue here
 	uint32_t RND;
 	RNG_HandleTypeDef hrng;
@@ -610,7 +715,7 @@ void printMatrix(void){
 #elif MATRIX_LCD == 0
 	printf("Matrix Representation:\n");
 
-	for (int i = ROWS; i > -1; i--) {
+	for (int i = ROWS-1; i >= 0; i--) {
 		printf("%3d|", i);
 		for (int j = 0; j < COLS; j++) {
 			printf("%5d", dummyTable[i][j]);

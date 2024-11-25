@@ -28,9 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 //#include "stm32f4xx_hal.h"
-//#include "Matrixdef.h"
 #include "ApplicationCode.h"
-//#include "Scheduler.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
