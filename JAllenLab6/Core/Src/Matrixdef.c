@@ -34,16 +34,15 @@ uint8_t check_State(void) {
 	{
 		return 0; // This means object has gone outside of the bounds
 	} else if( (object.originbit.y <= 0)      || (object.suboriginbit_0.y <= 0) ||
-			   (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) )
+			   (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) ||
+			   (dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
+			   (dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) ||
+			   (dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) ||
+			   (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1))
 	{
-		// initiate the ending protocal
 		// Place the object in the matrix, generate new object
-		dummyTable[object.originbit.x][object.originbit.y] = 1;
-		dummyTable[object.suboriginbit_0.x][object.suboriginbit_0.y] = 1;
-		dummyTable[object.suboriginbit_1.x][object.suboriginbit_1.y] = 1;
-		dummyTable[object.suboriginbit_2.x][object.suboriginbit_2.y] = 1;
 		object_Select();
-		return 1; // This means object has hit the button
+		return 1; // This means object has hit the bottom
 	} else {
 		return 2; // In case we want to see nothing can be done
 	}
@@ -599,7 +598,10 @@ void tick_Matrix(void){
 	object.suboriginbit_1.y -= 1;
 	object.suboriginbit_2.y -= 1;
 	// draw the new state
-	Matrix_update();
+	if(check_State() == 2) {
+		Matrix_update();
+	}
+
 }
 void printMatrix(void){
 #if MATRIX_LCD == 1
@@ -632,10 +634,20 @@ void printMatrix(void){
 }
 
 void Matrix_clear(void) {
-	dummyTable[object.originbit.y][object.originbit.x] = 0;
-	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
-	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
-	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
+	if ((object.originbit.y == 0) || (object.suboriginbit_0.y == 0) ||
+	    (object.suboriginbit_1.y == 0) ||(object.suboriginbit_2.y == 0))
+	{
+		dummyTable[object.originbit.y][object.originbit.x] = 1;
+		dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
+		dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
+		dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
+	}
+	else {
+		dummyTable[object.originbit.y][object.originbit.x] = 0;
+		dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
+		dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
+		dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
+	}
 }
 void Matrix_update(void){
 	dummyTable[object.originbit.y][object.originbit.x] = 1;
