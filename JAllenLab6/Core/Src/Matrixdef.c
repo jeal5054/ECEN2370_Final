@@ -18,34 +18,34 @@ void START_SCREEN(void){
 	LCD_SetTextColor(LCD_COLOR_WHITE);
 	LCD_SetFont(&Font16x24);
 	// TETRIS
-	LCD_DisplayChar(95,212,'T');
-	LCD_DisplayChar(105,212,'E');
-	LCD_DisplayChar(115,212,'T');
-	LCD_DisplayChar(125,212,'R');
-	LCD_DisplayChar(135,212,'I');
-	LCD_DisplayChar(145,212,'S');
-	// PRESS
-	LCD_DisplayChar(100,170,'P');
-	LCD_DisplayChar(110,170,'R');
-	LCD_DisplayChar(120,170,'E');
-	LCD_DisplayChar(130,170,'S');
-	LCD_DisplayChar(140,170,'S');
-	// BUTTON
-	LCD_DisplayChar(95,150,'B');
-	LCD_DisplayChar(105,150,'U');
-	LCD_DisplayChar(115,150,'T');
-	LCD_DisplayChar(125,150,'T');
-	LCD_DisplayChar(135,150,'O');
-	LCD_DisplayChar(145,150,'N');
-	// TO
-	LCD_DisplayChar(115,130,'T');
-	LCD_DisplayChar(125,130,'O');
-	// START
-	LCD_DisplayChar(100,110,'S');
+	LCD_DisplayChar(70,110,'T');
+	LCD_DisplayChar(90,110,'E');
 	LCD_DisplayChar(110,110,'T');
-	LCD_DisplayChar(120,110,'A');
 	LCD_DisplayChar(130,110,'R');
-	LCD_DisplayChar(140,110,'T');
+	LCD_DisplayChar(150,110,'I');
+	LCD_DisplayChar(170,110,'S');
+	// PRESS
+	LCD_DisplayChar(80,130,'P');
+	LCD_DisplayChar(100,130,'R');
+	LCD_DisplayChar(120,130,'E');
+	LCD_DisplayChar(140,130,'S');
+	LCD_DisplayChar(160,130,'S');
+	// BUTTON
+	LCD_DisplayChar(70,150,'B');
+	LCD_DisplayChar(90,150,'U');
+	LCD_DisplayChar(110,150,'T');
+	LCD_DisplayChar(130,150,'T');
+	LCD_DisplayChar(150,150,'O');
+	LCD_DisplayChar(170,150,'N');
+	// TO
+	LCD_DisplayChar(110,170,'T');
+	LCD_DisplayChar(130,170,'O');
+	// START
+	LCD_DisplayChar(80,190,'S');
+	LCD_DisplayChar(100,190,'T');
+	LCD_DisplayChar(120,190,'A');
+	LCD_DisplayChar(140,190,'R');
+	LCD_DisplayChar(160,190,'T');
 
 
 #else
@@ -100,21 +100,21 @@ void GAME_OVER(uint32_t total_time) { // code for displaying game over
 	LCD_SetFont(&Font16x24);
 
 	// GAME
-	LCD_DisplayChar(105,170,'G');
-	LCD_DisplayChar(115,170,'A');
-	LCD_DisplayChar(125,170,'M');
-	LCD_DisplayChar(135,170,'E');
+	LCD_DisplayChar(90,100,'G');
+	LCD_DisplayChar(110,100,'A');
+	LCD_DisplayChar(130,100,'M');
+	LCD_DisplayChar(150,100,'E');
 	// OVER
-	LCD_DisplayChar(105,150,'O');
-	LCD_DisplayChar(115,150,'V');
-	LCD_DisplayChar(125,150,'E');
-	LCD_DisplayChar(135,150,'R');
+	LCD_DisplayChar(90,130,'O');
+	LCD_DisplayChar(110,130,'V');
+	LCD_DisplayChar(130,130,'E');
+	LCD_DisplayChar(150,130,'R');
 	// TIME:
-	LCD_DisplayChar(105,130,'T');
-	LCD_DisplayChar(115,130,'I');
-	LCD_DisplayChar(125,130,'M');
-	LCD_DisplayChar(135,130,'E');
-	LCD_DisplayChar(135,130,':');
+	LCD_DisplayChar(85,160,'T');
+	LCD_DisplayChar(105,160,'I');
+	LCD_DisplayChar(125,160,'M');
+	LCD_DisplayChar(145,160,'E');
+	LCD_DisplayChar(165,160,':');
 
 	//Timer to keep tract
 	// Format the total time (in minutes and seconds)
@@ -126,11 +126,11 @@ void GAME_OVER(uint32_t total_time) { // code for displaying game over
 	char s1 = '0' + (seconds / 10);  // Tens place of seconds
 	char s2 = '0' + (seconds % 10);  // Units place of seconds
 
-	LCD_DisplayChar(105,130,m1);
-	LCD_DisplayChar(115,130,m2);
-	LCD_DisplayChar(125,130,':');
-	LCD_DisplayChar(135,130,s1);
-	LCD_DisplayChar(135,130,s2);
+	LCD_DisplayChar(85,190,m1);
+	LCD_DisplayChar(105,190,m2);
+	LCD_DisplayChar(125,190,':');
+	LCD_DisplayChar(145,190,s1);
+	LCD_DisplayChar(165,190,s2);
 
 
 #else
@@ -199,7 +199,7 @@ void RND_NUM(void) { // issue here
 	  /* USER CODE BEGIN RNG_Init 2 */
     if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
     	// Handle the error (e.g., infinite loop or error logging)
-	    while (1);
+	    printf("Error Generating Random Number");
 	}
 	   RND = RND % 7;  // Constrain the result to 0-6
 	   randomNumber = RND;
@@ -228,7 +228,6 @@ uint8_t check_State(void) {
 }
 
 void object_Select(void){
-
 	RND_NUM();
 	Matrix_clear();
 	switch(randomNumber) {
@@ -800,16 +799,29 @@ void printMatrix(void){
 	//LCD_Draw_Circle_Fill(x,y,radius,color);
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLS; j++) {
-			//uint8_t value = dummyTable[i][j];
+			uint8_t value = dummyTable[i][j];
+			if(value){
+				// Calculate top-left corner of the block
+				int x = j * 24;//BLOCK_WIDTH;
+				int y = i * 24;//BLOCK_HEIGHT;
 
-			// Calculate top-left corner of the block
-			int x = j * 24;//BLOCK_WIDTH;
-			int y = i * 24;//BLOCK_HEIGHT;
+				// Draw the block on the screen
 
-			// Draw the block on the screen
-			for (int row = 0; row < BLOCK_HEIGHT; row++) {
-				for (int col = 0; col < BLOCK_WIDTH; col++) {
-					LCD_Draw_Pixel(x+col,y+row,LCD_COLOR_RED);
+				for (int row = 0; row < BLOCK_HEIGHT; row++) {
+					for (int col = 0; col < BLOCK_WIDTH; col++) {
+						LCD_Draw_Pixel(x+col,y+row,LCD_COLOR_RED);
+					}
+				}
+			} else {
+				int x = j * 24;//BLOCK_WIDTH;
+				int y = i * 24;//BLOCK_HEIGHT;
+
+				// Draw the block on the screen
+
+				for (int row = 0; row < BLOCK_HEIGHT; row++) {
+					for (int col = 0; col < BLOCK_WIDTH; col++) {
+						LCD_Draw_Pixel(x+col,y+row,LCD_COLOR_WHITE);
+					}
 				}
 			}
 		}

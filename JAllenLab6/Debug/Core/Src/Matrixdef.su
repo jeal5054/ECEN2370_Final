@@ -3,10 +3,10 @@
 ../Core/Src/Matrixdef.c:190:6:RND_NUM	32	static
 ../Core/Src/Matrixdef.c:208:9:check_State	8	static
 ../Core/Src/Matrixdef.c:230:6:object_Select	96	static
-../Core/Src/Matrixdef.c:330:6:shift_Left	32	static
-../Core/Src/Matrixdef.c:347:6:shift_Right	32	static
-../Core/Src/Matrixdef.c:364:6:transform_rotation	24	static
-../Core/Src/Matrixdef.c:783:6:tick_Matrix	8	static
-../Core/Src/Matrixdef.c:797:6:printMatrix	32	static
-../Core/Src/Matrixdef.c:844:6:Matrix_clear	4	static
-../Core/Src/Matrixdef.c:860:6:Matrix_update	4	static
+../Core/Src/Matrixdef.c:329:6:shift_Left	32	static
+../Core/Src/Matrixdef.c:346:6:shift_Right	32	static
+../Core/Src/Matrixdef.c:363:6:transform_rotation	24	static
+../Core/Src/Matrixdef.c:782:6:tick_Matrix	8	static
+../Core/Src/Matrixdef.c:796:6:printMatrix	56	static
+../Core/Src/Matrixdef.c:856:6:Matrix_clear	4	static
+../Core/Src/Matrixdef.c:872:6:Matrix_update	4	static

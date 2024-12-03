@@ -279,6 +279,7 @@ void enableInterruptSupportForTouch(void)
 void verifyHAL_I2C_IS_OKAY(){
     if (HAL_status != HAL_OK)
     {
+    	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_14); // Error with I2C
         while(1);
     }
 }
