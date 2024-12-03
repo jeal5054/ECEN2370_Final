@@ -6,10 +6,44 @@
  */
 #include "Matrixdef.h"
 
-#define MATRIX_LCD 0
+#define MATRIX_LCD 1
 
 void START_SCREEN(void){
 #if MATRIX_LCD == 1
+	uint32_t color;
+	LCD_Clear(0,LCD_COLOR_BLUE);
+	LCD_SetTextColor(LCD_COLOR_WHITE);
+	LCD_SetFont(&Font16x24);
+	// TETRIS
+	LCD_DisplayChar(95,212,'T');
+	LCD_DisplayChar(105,212,'E');
+	LCD_DisplayChar(115,212,'T');
+	LCD_DisplayChar(125,212,'R');
+	LCD_DisplayChar(135,212,'I');
+	LCD_DisplayChar(145,212,'S');
+	// PRESS
+	LCD_DisplayChar(100,170,'P');
+	LCD_DisplayChar(110,170,'R');
+	LCD_DisplayChar(120,170,'E');
+	LCD_DisplayChar(130,170,'S');
+	LCD_DisplayChar(140,170,'S');
+	// BUTTON
+	LCD_DisplayChar(95,150,'B');
+	LCD_DisplayChar(105,150,'U');
+	LCD_DisplayChar(115,150,'T');
+	LCD_DisplayChar(125,150,'T');
+	LCD_DisplayChar(135,150,'O');
+	LCD_DisplayChar(145,150,'N');
+	// TO
+	LCD_DisplayChar(115,130,'T');
+	LCD_DisplayChar(125,130,'O');
+	// START
+	LCD_DisplayChar(100,110,'S');
+	LCD_DisplayChar(110,110,'T');
+	LCD_DisplayChar(120,110,'A');
+	LCD_DisplayChar(130,110,'R');
+	LCD_DisplayChar(140,110,'T');
+
 
 #else
 	int rows = 13, cols = 10;  // Width set to 10
@@ -58,6 +92,43 @@ void START_SCREEN(void){
 
 void GAME_OVER(uint32_t total_time) { // code for displaying game over
 #if MATRIX_LCD == 1
+	LCD_Clear(0,LCD_COLOR_BLUE);
+	LCD_SetTextColor(LCD_COLOR_WHITE);
+	LCD_SetFont(&Font16x24);
+
+	// GAME
+	LCD_DisplayChar(105,170,'G');
+	LCD_DisplayChar(115,170,'A');
+	LCD_DisplayChar(125,170,'M');
+	LCD_DisplayChar(135,170,'E');
+	// OVER
+	LCD_DisplayChar(105,150,'O');
+	LCD_DisplayChar(115,150,'V');
+	LCD_DisplayChar(125,150,'E');
+	LCD_DisplayChar(135,150,'R');
+	// TIME:
+	LCD_DisplayChar(105,130,'T');
+	LCD_DisplayChar(115,130,'I');
+	LCD_DisplayChar(125,130,'M');
+	LCD_DisplayChar(135,130,'E');
+	LCD_DisplayChar(135,130,':');
+
+	//Timer to keep tract
+	// Format the total time (in minutes and seconds)
+	uint32_t minutes = total_time / 60;
+	uint32_t seconds = total_time % 60;
+
+	char m1 = '0' + (minutes / 10);  // Tens place of minutes
+	char m2 = '0' + (minutes % 10);  // Units place of minutes
+	char s1 = '0' + (seconds / 10);  // Tens place of seconds
+	char s2 = '0' + (seconds % 10);  // Units place of seconds
+
+	LCD_DisplayChar(105,130,m1);
+	LCD_DisplayChar(115,130,m2);
+	LCD_DisplayChar(125,130,':');
+	LCD_DisplayChar(135,130,s1);
+	LCD_DisplayChar(135,130,s2);
+
 
 #else
 	char matrix_enc[ROWS][COLS];
@@ -253,23 +324,35 @@ void object_Select(void){
 	Matrix_update();
 }
 
-void shift_Left(){
+void shift_Left(uint32_t X){
+	X = X%240; // Get object into our grid
 	Object temp = object;
+	/*
 	object.originbit.x -= 1;
 	object.suboriginbit_0.x -= 1;
 	object.suboriginbit_1.x -= 1;
 	object.suboriginbit_2.x -= 1;
+	*/
+	object.originbit.x = X;
+	object.Rotation -= 1;
+	transform_rotation();
 	if(check_State()) {
 		object = temp;
 	}
 }
 
-void shift_Right(){
+void shift_Right(uint32_t X){
+	X = X%240; // Get object into our grid
 	Object temp = object;
+	/*
 	object.originbit.x += 1;
 	object.suboriginbit_0.x += 1;
 	object.suboriginbit_1.x += 1;
 	object.suboriginbit_2.x += 1;
+	*/
+	object.originbit.x = X;
+	object.Rotation -= 1;
+	transform_rotation();
 	if(check_State()) {
 		object = temp;
 	}
@@ -711,6 +794,23 @@ void tick_Matrix(void){
 void printMatrix(void){
 #if MATRIX_LCD == 1
 	// Connect to the LCD screen and update that
+	//LCD_Draw_Circle_Fill(x,y,radius,color);
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
+			//uint8_t value = dummyTable[i][j];
+
+			// Calculate top-left corner of the block
+			int x = j * 24;//BLOCK_WIDTH;
+			int y = i * 24;//BLOCK_HEIGHT;
+
+			// Draw the block on the screen
+			for (int row = 0; row < BLOCK_HEIGHT; row++) {
+				for (int col = 0; col < BLOCK_WIDTH; col++) {
+					LCD_Draw_Pixel(x + col, y + row, LCD_COLOR_RED);
+				}
+			}
+		}
+	}
 
 #elif MATRIX_LCD == 0
 	printf("Matrix Representation:\n");

@@ -17,6 +17,9 @@
 #define pixel_Area (pixel_Width*pixel_Length)
 #define ROWS 13
 #define COLS 10
+
+#define BLOCK_WIDTH   (240 / COLS)  // 32 pixels
+#define BLOCK_HEIGHT  (320 / ROWS) // ~18 pixels
 /*	MATRIX PLAN
  13x10 Grid, x = 0 starts at left screen
  	 	 	 y = 0 starts at bottom of screen
@@ -83,8 +86,8 @@ void GAME_OVER(uint32_t total_time);
 void RND_NUM(void);
 uint8_t check_State(void); // Essentially passing in an object that has be transformed to see if it violates issues
 void object_Select(void);
-void shift_Left(void);
-void shift_Right(void);
+void shift_Left(uint32_t X);
+void shift_Right(uint32_t X);
 void transform_rotation(void); // Rotating the object
 void tick_Matrix(void);
 void printMatrix(void);

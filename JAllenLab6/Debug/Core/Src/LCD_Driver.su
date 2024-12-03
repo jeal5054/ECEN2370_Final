@@ -10,5 +10,9 @@
 ../Core/Src/LCD_Driver.c:256:6:LCD_SetFont	16	static
 ../Core/Src/LCD_Driver.c:262:6:LCD_Draw_Char	24	static
 ../Core/Src/LCD_Driver.c:282:6:LCD_DisplayChar	16	static
-../Core/Src/LCD_Driver.c:288:6:visualDemo	16	static
-../Core/Src/LCD_Driver.c:338:6:LCD_Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/LCD_Driver.c:292:6:LCD_Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/LCD_Driver.c:307:6:InitializeLCDTouch	8	static
+../Core/Src/LCD_Driver.c:315:18:returnTouchStateAndLocation	16	static
+../Core/Src/LCD_Driver.c:320:6:DetermineTouchPosition	16	static
+../Core/Src/LCD_Driver.c:325:9:ReadRegisterFromTouchModule	16	static
+../Core/Src/LCD_Driver.c:330:6:WriteDataToTouchModule	16	static

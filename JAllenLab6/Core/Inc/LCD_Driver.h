@@ -71,20 +71,14 @@ void LCD_Clear(uint8_t LayerIndex, uint16_t Color);
 
 void LCD_Error_Handler(void);
 
-// Demo using provided functions
-void visualDemo(void);
-
 void LCD_Error_Handler(void);
 
-#if COMPILE_TOUCH_FUNCTIONS == 1
 void InitializeLCDTouch(void);
 STMPE811_State_t returnTouchStateAndLocation(STMPE811_TouchData * touchStruct);
 void LCD_Touch_Polling_Demo(void);
 void DetermineTouchPosition(STMPE811_TouchData * touchStruct);
 uint8_t ReadRegisterFromTouchModule(uint8_t RegToRead);
 void WriteDataToTouchModule(uint8_t RegToWrite, uint8_t writeData);
-
-#endif // COMPILE_TOUCH_FUNCTIONS
 
 
 /*        APPLICATION SPECIFIC FUNCTION DECLARATION - PUT YOUR NEWLY CREATED FUNCTIONS HERE       */

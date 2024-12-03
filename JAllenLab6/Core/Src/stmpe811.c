@@ -7,8 +7,6 @@
 
 #include "stmpe811.h"
 
-#if COMPILE_TOUCH == 1
-
 #define ONEBYTE  1
 #define TWOBYTE  2
 
@@ -126,7 +124,6 @@ STMPE811_State_t STMPE811_Init(void)
     I2C3_Write(STMPE811_ADDRESS, STMPE811_INT_STA, 0xFF);
 
     /* Enable global interrupts */
-    #if COMPILE_TOUCH_INTERRUPT_SUPPORT == 1
 
     enableInterruptSupportForTouch();
 
@@ -138,8 +135,6 @@ STMPE811_State_t STMPE811_Init(void)
     mode = STMPE811_Read(STMPE811_INT_EN);
     mode |= 0x01;
     I2C3_Write(STMPE811_ADDRESS, STMPE811_INT_EN, mode);
-
-    #endif // COMPILE_TOUCH_INTERRUPT_SUPPORT
 
     /* Wait for 2 ms delay */
     HAL_Delay(200);
@@ -259,7 +254,6 @@ bool isSTMPE811_Ready(void)
     return true;
 }
 
-#if COMPILE_TOUCH_INTERRUPT_SUPPORT == 1
 
 void enableInterruptSupportForTouch(void)
 {
@@ -279,8 +273,6 @@ void enableInterruptSupportForTouch(void)
     NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
-
-#endif
 
 
 //  ******************************** I2C Functions ********************************//
@@ -419,8 +411,6 @@ uint16_t TM_STMPE811_ReadY(uint16_t y) { // TM FUNCTION
     }
     return y;
 }
-
-#endif
 
 
 

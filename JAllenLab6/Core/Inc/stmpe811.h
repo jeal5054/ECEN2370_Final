@@ -12,13 +12,6 @@
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
 
-#define COMPILE_TOUCH  0
-#define COMPILE_TOUCH_INTERRUPT_SUPPORT    0
-
-#if (COMPILE_TOUCH_INTERRUPT_SUPPORT == 1 && COMPILE_TOUCH == 0)
-#error "You cannot have touch interrupt support without compiling all touch functionality"
-#endif // (COMPILE_TOUCH_INTERRUPT_SUPPORT == 1 && COMPILE_TOUCH == 0)
-
 /* Private defines */
 /* I2C address */
 #define STMPE811_ADDRESS                0x82
@@ -140,12 +133,8 @@ STMPE811_State_t STMPE811_Init(void);
 bool isSTMPE811_Ready(void);
 void STMPE811_DetermineTouchPosition(STMPE811_TouchData * data);
 
-#if COMPILE_TOUCH_INTERRUPT_SUPPORT == 1
 
 void STMPE811_DetermineTouchPosition(STMPE811_TouchData * data);
 void enableInterruptSupportForTouch(void);
-
-#endif
-
 
 #endif /* INC_STMPE811_H_ */
