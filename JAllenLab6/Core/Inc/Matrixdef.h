@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "stm32f4xx_hal.h"
+#include "LCD_Driver.h"
 
 #define pixel_Width 24
 #define pixel_Length 24
@@ -72,10 +73,12 @@ typedef struct {
 	coordinates suboriginbit_1;
 	coordinates suboriginbit_2;
 } Object;
-
+/*
 static Object object;
 static uint8_t dummyTable[ROWS][COLS];
 static uint32_t randomNumber;
+*/
+
 
 /*******
  Functions used for matrix manipulation of variable

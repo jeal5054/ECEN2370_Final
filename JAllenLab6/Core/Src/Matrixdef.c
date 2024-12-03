@@ -8,9 +8,12 @@
 
 #define MATRIX_LCD 1
 
+static Object object;
+static uint8_t dummyTable[ROWS][COLS];
+static uint32_t randomNumber;
+
 void START_SCREEN(void){
 #if MATRIX_LCD == 1
-	uint32_t color;
 	LCD_Clear(0,LCD_COLOR_BLUE);
 	LCD_SetTextColor(LCD_COLOR_WHITE);
 	LCD_SetFont(&Font16x24);
@@ -806,7 +809,7 @@ void printMatrix(void){
 			// Draw the block on the screen
 			for (int row = 0; row < BLOCK_HEIGHT; row++) {
 				for (int col = 0; col < BLOCK_WIDTH; col++) {
-					LCD_Draw_Pixel(x + col, y + row, LCD_COLOR_RED);
+					LCD_Draw_Pixel(x+col,y+row,LCD_COLOR_RED);
 				}
 			}
 		}
