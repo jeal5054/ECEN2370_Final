@@ -117,7 +117,8 @@ void GAME_OVER(uint32_t total_time) { // code for displaying game over
 	LCD_DisplayChar(165,160,':');
 
 	//Timer to keep tract
-	// Format the total time (in minutes and seconds)
+	// t_on = ARR / 16MHz
+	total_time = total_time / 1599999;
 	uint32_t minutes = total_time / 60;
 	uint32_t seconds = total_time % 60;
 
@@ -203,6 +204,7 @@ void RND_NUM(void) { // issue here
 	}
 	   RND = RND % 7;  // Constrain the result to 0-6
 	   randomNumber = RND;
+	   printf("Random Number: %ld", randomNumber);
 }
 
 uint8_t check_State(void) {
@@ -447,26 +449,26 @@ void transform_rotation(){
 						//[1]
 						// 1
 					object.suboriginbit_0.x = object.originbit.x;
-					object.suboriginbit_0.y = object.originbit.y;
+					object.suboriginbit_0.y = object.originbit.y + 1;
 
-					object.suboriginbit_1.x = object.originbit.x;
-					object.suboriginbit_1.y = object.originbit.y;
+					object.suboriginbit_1.x = object.originbit.x + 1;
+					object.suboriginbit_1.y = object.originbit.y + 1;
 
 					object.suboriginbit_2.x = object.originbit.x;
-					object.suboriginbit_2.y = object.originbit.y;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 
 					break;
 				case(ROTATION_2):
 						// 1 [1] 1
 						//       1
-					object.suboriginbit_0.x = object.originbit.x;
+					object.suboriginbit_0.x = object.originbit.x + 1;
 					object.suboriginbit_0.y = object.originbit.y;
 
-					object.suboriginbit_1.x = object.originbit.x;
+					object.suboriginbit_1.x = object.originbit.x - 1;
 					object.suboriginbit_1.y = object.originbit.y;
 
-					object.suboriginbit_2.x = object.originbit.x;
-					object.suboriginbit_2.y = object.originbit.y;
+					object.suboriginbit_2.x = object.originbit.x + 1;
+					object.suboriginbit_2.y = object.originbit.y - 1;
 
 					break;
 				case(ROTATION_3):
@@ -474,13 +476,13 @@ void transform_rotation(){
 						//  [1]
 						// 1 1
 					object.suboriginbit_0.x = object.originbit.x;
-					object.suboriginbit_0.y = object.originbit.y;
+					object.suboriginbit_0.y = object.originbit.y - 1;
 
 					object.suboriginbit_1.x = object.originbit.x;
-					object.suboriginbit_1.y = object.originbit.y;
+					object.suboriginbit_1.y = object.originbit.y + 1;
 
-					object.suboriginbit_2.x = object.originbit.x;
-					object.suboriginbit_2.y = object.originbit.y;
+					object.suboriginbit_2.x = object.originbit.x - 1;
+					object.suboriginbit_2.y = object.originbit.y + 1;
 
 					break;
 			}

@@ -121,7 +121,7 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  uint32_t game_ender = 0;
+  //uint32_t game_ender = 0;
   uint8_t BUTTON_START = 0;
   while(!BUTTON_START) {
 	  BUTTON_START = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0); // read button by polling
@@ -143,10 +143,12 @@ int main(void)
 	  }
 
 	  // Just for testing elapsed time
+	  /*
 	  game_ender++;
 	  if(game_ender > 3000000) {
 		  removeSchedulerEvent(MATRIX_UPDATE_EVENT);
 	  }
+	  */
    }
   /* USER CODE END 3 */
 }
@@ -443,7 +445,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_DOWN;
-  htim2.Init.Period = 3999999;//15999999;
+  htim2.Init.Period = 15999999*3;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
