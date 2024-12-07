@@ -109,7 +109,10 @@ int main(void)
   MX_LTDC_Init();
   MX_I2C3_Init();
   MX_RNG_Init();
+
   MX_TIM2_Init();
+  HAL_TIM_Base_Stop(&htim2);
+
   MX_SPI5_Init();
   MX_TIM5_Init();
 
@@ -126,29 +129,24 @@ int main(void)
   while(!BUTTON_START) {
 	  BUTTON_START = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0); // read button by polling
   }
+  HAL_TIM_Base_Start(&htim2);
   start_time = __HAL_TIM_GET_COUNTER(&htim5);
   LCD_Clear(0, LCD_COLOR_WHITE);
   addScheduledEvent(MATRIX_UPDATE_EVENT);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-   {
+  {
 	  eventsToRun = getScheduledEvents();
-	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
-	  else {
-		end_time = __HAL_TIM_GET_COUNTER(&htim5);
-		total_time = (end_time - start_time);
-		GAME_OVER(total_time);
-		while(1);
+	  if(eventsToRun && MATRIX_UPDATE_EVENT) {
+		  printMatrix();
+	  }else if(eventsToRun && (uint32_t*)MATRIX_END_EVENT) {
+		  end_time = __HAL_TIM_GET_COUNTER(&htim5);
+		  total_time = (end_time - start_time);
+		  GAME_OVER(total_time);
+		  while(1);
 	  }
 
-	  // Just for testing elapsed time
-	  /*
-	  game_ender++;
-	  if(game_ender > 3000000) {
-		  removeSchedulerEvent(MATRIX_UPDATE_EVENT);
-	  }
-	  */
    }
   /* USER CODE END 3 */
 }

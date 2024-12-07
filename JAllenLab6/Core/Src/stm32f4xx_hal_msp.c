@@ -536,7 +536,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     	transform_rotation();
     }
 }
-
+//static BUTTON_FLAG_START;
 // Interrupt callback function
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM2) {

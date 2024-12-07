@@ -237,7 +237,6 @@ void STMPE811_DetermineTouchPosition(STMPE811_TouchData * data)
         data->y = 239 - TM_STMPE811_ReadX(data->x);
         data->x = TM_STMPE811_ReadY(data->x);
     }
-
     //Reset Fifo
     I2C3_Write(STMPE811_ADDRESS, STMPE811_FIFO_STA, 0x01);
     I2C3_Write(STMPE811_ADDRESS, STMPE811_FIFO_STA, 0x00);

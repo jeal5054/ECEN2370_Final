@@ -202,7 +202,6 @@
 /* #define USE_FULL_ASSERT    1U */
 
 /* ################## Ethernet peripheral configuration ##################### */
-
 /* Section 1 : Ethernet peripheral configuration */
 
 /* MAC ADDRESS: MAC_ADDR0:MAC_ADDR1:MAC_ADDR2:MAC_ADDR3:MAC_ADDR4:MAC_ADDR5 */

@@ -12,12 +12,22 @@
 #include <stdio.h>
 #include "stm32f4xx_hal.h"
 #include "LCD_Driver.h"
+#include "Scheduler.h"
 
 #define pixel_Width 24
 #define pixel_Length 24
 #define pixel_Area (pixel_Width*pixel_Length)
 #define ROWS 13
 #define COLS 10
+
+#define STATE_OUT_OF_BOUNDS 0
+#define STATE_HIT_BOTTOM 1
+#define STATE_GAME_OVER 3
+#define STATE_SAFE 2
+
+#define END_GAME 3
+#define COLLISION 2
+#define SAFE 1
 
 #define BLOCK_WIDTH   (240 / COLS)  // 32 pixels
 #define BLOCK_HEIGHT  (320 / ROWS) // ~18 pixels
@@ -88,9 +98,10 @@ void GAME_OVER(uint32_t total_time);
 
 void RND_NUM(void);
 uint8_t check_State(void); // Essentially passing in an object that has be transformed to see if it violates issues
+void check_Decide(uint8_t state, Object temp);
 void object_Select(void);
-void shift_Left(uint32_t X);
-void shift_Right(uint32_t X);
+void shift_Left(uint16_t X);
+void shift_Right(uint16_t X);
 void transform_rotation(void); // Rotating the object
 void tick_Matrix(void);
 void printMatrix(void);

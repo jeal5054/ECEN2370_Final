@@ -33,7 +33,7 @@ Core/Src/Matrixdef.o: ../Core/Src/Matrixdef.c ../Core/Inc/Matrixdef.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Core/Inc/LCD_Driver.h ../Core/Inc/ili9341.h ../Core/Inc/fonts.h \
- ../Core/Inc/stmpe811.h
+ ../Core/Inc/stmpe811.h ../Core/Inc/Matrixdef.h ../Core/Inc/Scheduler.h
 ../Core/Inc/Matrixdef.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -72,3 +72,5 @@ Core/Src/Matrixdef.o: ../Core/Src/Matrixdef.c ../Core/Inc/Matrixdef.h \
 ../Core/Inc/ili9341.h:
 ../Core/Inc/fonts.h:
 ../Core/Inc/stmpe811.h:
+../Core/Inc/Matrixdef.h:
+../Core/Inc/Scheduler.h:
