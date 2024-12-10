@@ -54,7 +54,7 @@
  */
 
 typedef enum { // Orioinal Names of Tetris blocks
-	ORICKY,
+	ORICKY = 0,
 	BRICKY,
 	CLEVELAND,
 	RHODE,
@@ -64,7 +64,7 @@ typedef enum { // Orioinal Names of Tetris blocks
 } Tetris_name;
 
 typedef enum{
-	ROTATION_0,
+	ROTATION_0 = 0,
 	ROTATION_1,
 	ROTATION_2,
 	ROTATION_3

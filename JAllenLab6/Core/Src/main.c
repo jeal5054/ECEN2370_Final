@@ -42,13 +42,9 @@ extern void initialise_monitor_handles(void);
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c3;
-
 LTDC_HandleTypeDef hltdc;
-
 RNG_HandleTypeDef hrng;
-
 SPI_HandleTypeDef hspi5;
-
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim5;
 
@@ -93,7 +89,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  //applicationInit();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -109,10 +104,8 @@ int main(void)
   MX_LTDC_Init();
   MX_I2C3_Init();
   MX_RNG_Init();
-
   MX_TIM2_Init();
-  HAL_TIM_Base_Stop(&htim2);
-
+  //HAL_TIM_Base_Stop_IT(&htim2);   // Stop TIM2 (with interrupts)
   MX_SPI5_Init();
   MX_TIM5_Init();
 
@@ -125,14 +118,16 @@ int main(void)
   /* USER CODE END 2 */
 
   //uint32_t game_ender = 0;
+
   uint8_t BUTTON_START = 0;
   while(!BUTTON_START) {
 	  BUTTON_START = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0); // read button by polling
   }
-  HAL_TIM_Base_Start(&htim2);
   start_time = __HAL_TIM_GET_COUNTER(&htim5);
   LCD_Clear(0, LCD_COLOR_WHITE);
-  addScheduledEvent(MATRIX_UPDATE_EVENT);
+  object_Select();
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -462,9 +457,12 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM2_Init 2 */
+  HAL_TIM_Base_Stop_IT(&htim2);
+  /*
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK) {
       Error_Handler(); // Handle errors appropriately
   }
+  */
   /* USER CODE END TIM2_Init 2 */
 
 }
@@ -689,7 +687,8 @@ static void MX_GPIO_Init(void)
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  //HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  HAL_NVIC_DisableIRQ(EXTI0_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

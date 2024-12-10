@@ -13,7 +13,7 @@ void LCDTouchScreenInterruptGPIOInit(void);
 
 void applicationInit(){
 	//applicationInterruptInit();
-	object_Select();
+	//object_Select();
 	addScheduledEvent(MATRIX_UPDATE_EVENT);
 
 	LTCD__Init();

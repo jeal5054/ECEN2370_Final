@@ -11,6 +11,7 @@
 static Object object;
 static uint8_t dummyTable[ROWS][COLS];
 static uint32_t randomNumber;
+static uint16_t tickNum;
 
 void START_SCREEN(void){
 #if MATRIX_LCD == 1
@@ -46,7 +47,6 @@ void START_SCREEN(void){
 	LCD_DisplayChar(120,190,'A');
 	LCD_DisplayChar(140,190,'R');
 	LCD_DisplayChar(160,190,'T');
-
 
 #else
 	int rows = 13, cols = 10;  // Width set to 10
@@ -206,7 +206,7 @@ void RND_NUM(void) { // issue here
 	   randomNumber = RND;
 	   //printf("Random Number: %ld", randomNumber);
 }
-
+/*
 uint8_t check_State(void) {
 	coordinates bits[] = {
 		object.originbit,
@@ -234,30 +234,82 @@ uint8_t check_State(void) {
 		return SAFE;
 	}
 }
+*/
+uint8_t check_State(void) {
+    coordinates bits[] = {
+        object.originbit,
+        object.suboriginbit_0,
+        object.suboriginbit_1,
+        object.suboriginbit_2
+    };
+
+    // Check bounds and collisions
+    for (int i = 0; i < 4; i++) {
+        // Horizontal bounds
+        if (bits[i].x < 0 || bits[i].x >= COLS) {
+        	printf(" Out of horizontal bounds\n");
+            return COLLISION; // Out of horizontal bounds
+        }
+
+        // Vertical bounds
+        if (bits[i].y < 0) {
+        	printf("hit bottom\n");
+            return COLLISION; // Hit the bottom
+        }
+
+        // Check for collisions with existing blocks
+        if (dummyTable[bits[i].y][bits[i].x] == 1) {
+            if (bits[i].y >= ROWS - 1) { // Game over condition
+            	printf("Hit top\n");
+                return END_GAME;
+            }
+            printf("block_hit\n");
+            return COLLISION;
+        }
+    }
+    printf("Safe Matrix\n");
+    // If all checks pass, the position is safe
+    return SAFE;
+}
+
 
 void check_Decide(uint8_t state, Object temp) {
-	printf("check_State result: %d\n", state);
-	if(state == END_GAME) {
-		removeSchedulerEvent(MATRIX_UPDATE_EVENT);
-		addScheduledEvent(MATRIX_END_EVENT);
-	} else if(state == COLLISION) {
-		object = temp;
-		Matrix_update();
-		object_Select();
-	} else if(state == SAFE) {
-		Matrix_clear();
-		Matrix_update();
-	} else {
-		printf("ERROR\n");
-	}
+    printf("check_State result: %d\n", state);
+    switch (state) {
+        case END_GAME:
+            removeSchedulerEvent(MATRIX_UPDATE_EVENT);
+            addScheduledEvent(MATRIX_END_EVENT);
+            break;
+
+        case COLLISION:
+        	/*
+            object = temp; // Restore object state
+            printf("Update Matrix\n");
+            Matrix_update(); // Lock the block in place
+            printf("Select Matrix\n");
+            object_Select(); // Spawn a new tetris block
+            break;
+            */
+        	Matrix_update(); // Update grid with current tetromino
+        	Matrix_clear(); // Clear previous state
+
+        case SAFE:
+        	Matrix_update(); // Update grid with current tetromino
+            Matrix_clear(); // Clear previous state
+            break;
+
+        default:
+            printf("ERROR: Invalid state\n");
+            break;
+    }
 }
 
 void object_Select(void){
 	RND_NUM();
-	Object temp = object;
+	//Object temp = object;
 	switch(randomNumber) {
 		case(ORICKY):
-			object = (Object){ORICKY, ROTATION_0-1, {5, 12}, {0, 0}, {0, 0}, {0, 0}}; //Cool trick I found
+			object = (Object){ORICKY, ROTATION_0-1, {5, 10}, {5, 10}, {5, 10}, {5, 10}}; //Cool trick I found
 			/*Object Oricky = {
 				.name = ORICKY,
 				.Rotation = ROTATION_0 - 1,			  //       1
@@ -267,90 +319,84 @@ void object_Select(void){
 				.suboriginbit_2 = {0, 0}
 			};
 			object = Oricky;*/
-			transform_rotation();
 			break;
 
 		case(BRICKY):
 			Object Bricky = {
 				.name = BRICKY,
 				.Rotation = ROTATION_0 - 1,           // 1
-				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
-				.suboriginbit_0 = {0, 0}, 
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.originbit = { .x = 5, .y = 10 },     // 1 [1] 1
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Bricky;
-			transform_rotation();
 			break;
 
 		case(CLEVELAND):
 			Object Cleveland = {
 				.name = CLEVELAND,
 				.Rotation = ROTATION_0 - 1,           //   1 1
-				.originbit = { .x = 5, .y = 12 }, 	  //    [1] 1
-				.suboriginbit_0 = {0, 0},  
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.originbit = { .x = 5, .y = 10 }, 	  //    [1] 1
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Cleveland;
-		    transform_rotation();
 			break;
 
 		case(RHODE):
 			Object Rhode = {
 				.name = RHODE,
 				.Rotation = ROTATION_0 - 1,           //        1 1
-				.originbit = { .x = 5, .y = 12 },     //     1 [1]
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.originbit = { .x = 5, .y = 10 },     //     1 [1]
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Rhode;
-			transform_rotation();
 			break;
 
 		case(HERO):
 			Object Hero = {
 				.name = HERO,
 				.Rotation = ROTATION_0 - 1,          	     //
-				.originbit = { .x = 5, .y = 12 }, 			 //  1 1 [1] 1
-				.suboriginbit_0 = {0, 0}, 
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.originbit = { .x = 5, .y = 10 }, 			 //  1 1 [1] 1
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Hero;
-			transform_rotation();
 			break;
 
 		case(TEEWEE):
 			Object Teewee = {
 				.name = TEEWEE,
 				.Rotation = ROTATION_0 - 1,          			//    1
-				.originbit = { .x = 5, .y = 12 }, 			 	// 1 [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.originbit = { .x = 5, .y = 10 }, 			 	// 1 [1] 1
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Teewee;
-			transform_rotation();
 			break;
 
 		case(SMASHBOY):
 			Object Smashboy = {
 				.name = SMASHBOY,
 				.Rotation = ROTATION_0 - 1,          			// 1  1
-				.originbit = { .x = 5, .y = 12 }, 			 	//[1] 1
+				.originbit = { .x = 5, .y = 10 }, 			 	//[1] 1
 				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 10},
+				.suboriginbit_1 = {5, 10},
+				.suboriginbit_2 = {5, 10}
 			};
 			object = Smashboy;
-			transform_rotation();
 			break;
 
 	}
 	transform_rotation();
-	check_Decide(check_State(), temp);
+	//check_Decide(check_State(), temp);
 }
 
 void shift_Left(uint16_t X){
@@ -380,7 +426,10 @@ void transform_rotation(){
 	if((object.Rotation > 3) || (object.Rotation < 0)) {
 		object.Rotation = 0;
 	}
-
+	if((object.Rotation != ROTATION_0) && (object.Rotation != ROTATION_1) &&
+	   (object.Rotation != ROTATION_2) && (object.Rotation != ROTATION_0)){
+		object.Rotation = ROTATION_0;
+	}
 	switch(object.name){
 		case(ORICKY):
 			switch(object.Rotation) {
@@ -787,23 +836,30 @@ void transform_rotation(){
 	check_Decide(check_State(), temp);
 }
 
-void tick_Matrix(void){
+void tick_Matrix(void) {
 	 // erase the previous state
-	Object temp = object;
-	//Matrix_clear();
-	// create the new object location
-	object.originbit.y -= 1;
-	object.suboriginbit_0.y -= 1;
-	object.suboriginbit_1.y -= 1;
-	object.suboriginbit_2.y -= 1;
-	// draw the new state
-	check_Decide(check_State(), temp);
+	tickNum++;
+	if( (object.Rotation == 0) && (object.name == 0) && (object.originbit.x == 0) && (object.originbit.y == 0) ) {
+		Object temp = object;
+		// create the new object location
+		object.originbit.y -= 1;
+		object.suboriginbit_0.y -= 1;
+		object.suboriginbit_1.y -= 1;
+		object.suboriginbit_2.y -= 1;
+		// draw the new state
+		printf("Ticking Matrix\n");
+		check_Decide(check_State(), temp);
+		printf("Ticking Matrix1\n");
+		printMatrix();
+		printf("Ticking Matrix2\n");
+	}
+	printf("Tick Num:%d\n",tickNum);
 }
 
 void printMatrix(void){
 #if MATRIX_LCD == 1
 	// Connect to the LCD screen and update that
-
+/*
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLS; j++) {
 			uint8_t value = dummyTable[i][j];
@@ -822,7 +878,8 @@ void printMatrix(void){
 
 		}
 	}
-	/*
+	*/
+	printf("Printing Matrix\n");
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLS; j++) {
 			uint8_t value = dummyTable[i][j];
@@ -851,7 +908,6 @@ void printMatrix(void){
 			}
 		}
 	}
-*/
 #elif MATRIX_LCD == 0
 	printf("Matrix Representation:\n");
 
