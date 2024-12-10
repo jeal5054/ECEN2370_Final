@@ -204,7 +204,7 @@ void RND_NUM(void) { // issue here
 	}
 	   RND = RND % 7;  // Constrain the result to 0-6
 	   randomNumber = RND;
-	   printf("Random Number: %ld", randomNumber);
+	   //printf("Random Number: %ld", randomNumber);
 }
 
 uint8_t check_State(void) {
@@ -222,6 +222,7 @@ uint8_t check_State(void) {
 			   (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1))
 	{
 		// Place the object in the matrix, generate new object
+		Matrix_update();
 		object_Select();
 		return 1; // This means object has hit the bottom
 	} else {
@@ -231,7 +232,7 @@ uint8_t check_State(void) {
 
 void object_Select(void){
 	RND_NUM();
-	Matrix_clear();
+	//Matrix_clear();
 	switch(randomNumber) {
 		case(ORICKY):
 			Object Oricky = {

@@ -137,19 +137,15 @@ int main(void)
 	  eventsToRun = getScheduledEvents();
 	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
 	  else {
+		if(check_State() != 3) {
+			printMatrix();
+		    break;
+		}
 		end_time = __HAL_TIM_GET_COUNTER(&htim5);
 		total_time = (end_time - start_time);
 		GAME_OVER(total_time);
 		while(1);
 	  }
-
-	  // Just for testing elapsed time
-	  /*
-	  game_ender++;
-	  if(game_ender > 3000000) {
-		  removeSchedulerEvent(MATRIX_UPDATE_EVENT);
-	  }
-	  */
    }
   /* USER CODE END 3 */
 }
