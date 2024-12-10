@@ -331,18 +331,20 @@ void object_Select(void){
 void shift_Left(uint32_t X){
 	X = X%240; // Get object into our grid
 	Object temp = object;
-	/*
+
 	object.originbit.x -= 1;
 	object.suboriginbit_0.x -= 1;
 	object.suboriginbit_1.x -= 1;
 	object.suboriginbit_2.x -= 1;
-	*/
+	/*
 	object.originbit.x = X;
+	*/
 	object.Rotation -= 1;
 	transform_rotation();
 	if(check_State()) {
 		object = temp;
 	}
+
 }
 
 void shift_Right(uint32_t X){

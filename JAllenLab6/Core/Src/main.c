@@ -129,6 +129,7 @@ int main(void)
   start_time = __HAL_TIM_GET_COUNTER(&htim5);
   LCD_Clear(0, LCD_COLOR_WHITE);
   addScheduledEvent(MATRIX_UPDATE_EVENT);
+  HAL_TIM_Base_Start_IT(&htim2);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -464,9 +465,12 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM2_Init 2 */
+  HAL_TIM_Base_Stop_IT(&htim2);
+  /*
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK) {
       Error_Handler(); // Handle errors appropriately
   }
+  */
   /* USER CODE END TIM2_Init 2 */
 
 }

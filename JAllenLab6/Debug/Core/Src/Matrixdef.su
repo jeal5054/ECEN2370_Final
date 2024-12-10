@@ -4,9 +4,9 @@
 ../Core/Src/Matrixdef.c:210:9:check_State	8	static
 ../Core/Src/Matrixdef.c:232:6:object_Select	96	static
 ../Core/Src/Matrixdef.c:331:6:shift_Left	32	static
-../Core/Src/Matrixdef.c:348:6:shift_Right	32	static
-../Core/Src/Matrixdef.c:365:6:transform_rotation	24	static
-../Core/Src/Matrixdef.c:784:6:tick_Matrix	8	static
-../Core/Src/Matrixdef.c:798:6:printMatrix	56	static
-../Core/Src/Matrixdef.c:858:6:Matrix_clear	4	static
-../Core/Src/Matrixdef.c:874:6:Matrix_update	4	static
+../Core/Src/Matrixdef.c:350:6:shift_Right	32	static
+../Core/Src/Matrixdef.c:367:6:transform_rotation	24	static
+../Core/Src/Matrixdef.c:786:6:tick_Matrix	8	static
+../Core/Src/Matrixdef.c:800:6:printMatrix	56	static
+../Core/Src/Matrixdef.c:860:6:Matrix_clear	4	static
+../Core/Src/Matrixdef.c:876:6:Matrix_update	4	static
