@@ -206,6 +206,13 @@ STMPE811_State_t STMPE811_ReadTouch(STMPE811_TouchData *structdata)  //TM Functi
         //Portrait
         if (structdata->x > 0 && structdata->x < 239 && structdata->y > 0 && structdata->y < 319) {
             structdata->pressed = STMPE811_State_Pressed;
+//TODO: add touch rotations in later
+            if(structdata->x >= 120) {
+            	// shift_Right(structdata->x);
+            } else {
+            	// shift_Left(structdata->x);
+            }
+
             return STMPE811_State_Pressed;
         }
     } else {

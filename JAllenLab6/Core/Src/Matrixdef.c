@@ -190,51 +190,61 @@ void GAME_OVER(uint32_t total_time) { // code for displaying game over
 
 void RND_NUM(void) { // issue here
 	uint32_t RND;
-	RNG_HandleTypeDef hrng;
-	hrng.Instance = RNG;
+	 RNG_HandleTypeDef hrng;
 
-	if (HAL_RNG_Init(&hrng) != HAL_OK)
-	{
-		while(1);
-	}
+
+		hrng.Instance = RNG;
+		if (HAL_RNG_Init(&hrng) != HAL_OK)
+		{
+			while(1);
+		}
+
 	  /* USER CODE BEGIN RNG_Init 2 */
     if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
     	// Handle the error (e.g., infinite loop or error logging)
 	    printf("Error Generating Random Number");
 	}
-	   RND = RND % 7;  // Constrain the result to 0-6
+	   //RND = RND % 7;  // Constrain the result to 0-6
 	   randomNumber = RND;
 	   //printf("Random Number: %ld", randomNumber);
 }
 
 uint8_t check_State(void) {
-	if(     (object.originbit.x <= 0) || (object.originbit.x >= 9) ||
-	   (object.suboriginbit_0.x <= 0) || (object.suboriginbit_0.x >= 9) ||
-	   (object.suboriginbit_1.x <= 0) || (object.suboriginbit_1.x >= 9) ||
-	   (object.suboriginbit_2.x <= 0) || (object.suboriginbit_2.x >= 9) )
-	{
-		return 0; // This means object has gone outside of the bounds
-	} else if( (object.originbit.y <= 0)      || (object.suboriginbit_0.y <= 0) ||
-			   (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) ||
-			   (dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
-			   (dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) ||
-			   (dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) ||
-			   (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1))
-	{
-		// Place the object in the matrix, generate new object
-		Matrix_update();
-		object_Select();
-		return 1; // This means object has hit the bottom
-	} else {
-		return 2; // In case we want to see nothing can be done
-	}
+    if( (object.originbit.x < 0) || (object.originbit.x >= 10) ||
+        (object.suboriginbit_0.x < 0) || (object.suboriginbit_0.x >= 10) ||
+        (object.suboriginbit_1.x < 0) || (object.suboriginbit_1.x >= 10) ||
+        (object.suboriginbit_2.x < 0) || (object.suboriginbit_2.x >= 10) )
+    {
+        return 0; // This means object has gone outside of the bounds
+    }
+    else if( (object.originbit.y <= 0) || (object.suboriginbit_0.y <= 0) ||
+             (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) ||
+             (dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
+             (dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) ||
+             (dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) ||
+             (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1))
+    {
+        Matrix_update();
+        object_Select();
+        return 1; // This means object has hit the bottom
+    }
+    else if(((dummyTable[object.originbit.y - 1][object.originbit.x] == 1) && object.originbit.y >= 12) ||
+            ((dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) && object.suboriginbit_0.y >= 12) ||
+            ((dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) && object.suboriginbit_1.y >= 12) ||
+            ((dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1) && object.suboriginbit_2.y >= 12)) {
+        return 3;
+    }
+    else {
+        return 2; // In case we want to see nothing can be done
+    }
 }
 
 void object_Select(void){
 	RND_NUM();
 	//Matrix_clear();
+	randomNumber = randomNumber % 7;
 	switch(randomNumber) {
-		case(ORICKY):
+		case(ORICKY):{
 			Object Oricky = {
 				.name = ORICKY,
 				.Rotation = ROTATION_0 - 1,			  //       1
@@ -246,8 +256,8 @@ void object_Select(void){
 			object = Oricky;
 		    transform_rotation();
 			break;
-
-		case(BRICKY):
+		}
+		case(BRICKY):{
 			Object Bricky = {
 				.name = BRICKY,
 				.Rotation = ROTATION_0 - 1,           // 1
@@ -259,8 +269,8 @@ void object_Select(void){
 			object = Bricky;
 			transform_rotation();
 			break;
-
-		case(CLEVELAND):
+		}
+		case(CLEVELAND):{
 			Object Cleveland = {
 				.name = CLEVELAND,
 				.Rotation = ROTATION_0 - 1,           //   1 1
@@ -272,8 +282,8 @@ void object_Select(void){
 			object = Cleveland;
 		    transform_rotation();
 			break;
-
-		case(RHODE):
+		}
+		case(RHODE):{
 			Object Rhode = {
 				.name = RHODE,
 				.Rotation = ROTATION_0 - 1,           //        1 1
@@ -285,8 +295,8 @@ void object_Select(void){
 			object = Rhode;
 			transform_rotation();
 			break;
-
-		case(HERO):
+		}
+		case(HERO):{
 			Object Hero = {
 				.name = HERO,
 				.Rotation = ROTATION_0 - 1,          	     //
@@ -298,8 +308,8 @@ void object_Select(void){
 			object = Hero;
 			transform_rotation();
 			break;
-
-		case(TEEWEE):
+		}
+		case(TEEWEE):{
 			Object Teewee = {
 				.name = TEEWEE,
 				.Rotation = ROTATION_0 - 1,          			//    1
@@ -311,8 +321,8 @@ void object_Select(void){
 			object = Teewee;
 			transform_rotation();
 			break;
-
-		case(SMASHBOY):
+		}
+		case(SMASHBOY):{
 			Object Smashboy = {
 				.name = SMASHBOY,
 				.Rotation = ROTATION_0 - 1,          			// 1  1
@@ -324,6 +334,7 @@ void object_Select(void){
 			object = Smashboy;
 			transform_rotation();
 			break;
+		}
 
 	}
 	Matrix_update();
@@ -351,13 +362,13 @@ void shift_Left(uint32_t X){
 void shift_Right(uint32_t X){
 	X = X%240; // Get object into our grid
 	Object temp = object;
-	/*
+
 	object.originbit.x += 1;
 	object.suboriginbit_0.x += 1;
 	object.suboriginbit_1.x += 1;
 	object.suboriginbit_2.x += 1;
-	*/
-	object.originbit.x = X;
+
+	//object.originbit.x = X;
 	object.Rotation -= 1;
 	transform_rotation();
 	if(check_State()) {

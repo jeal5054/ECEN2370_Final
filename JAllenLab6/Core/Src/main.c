@@ -129,6 +129,7 @@ int main(void)
   start_time = __HAL_TIM_GET_COUNTER(&htim5);
   LCD_Clear(0, LCD_COLOR_WHITE);
   addScheduledEvent(MATRIX_UPDATE_EVENT);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
   HAL_TIM_Base_Start_IT(&htim2);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -691,7 +692,7 @@ static void MX_GPIO_Init(void)
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  HAL_NVIC_DisableIRQ(EXTI0_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

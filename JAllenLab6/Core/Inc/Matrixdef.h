@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "stm32f4xx_hal.h"
 #include "LCD_Driver.h"
+#include "Scheduler.h"
 
 #define pixel_Width 24
 #define pixel_Length 24

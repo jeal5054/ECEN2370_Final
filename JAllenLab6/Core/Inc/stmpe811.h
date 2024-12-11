@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
-
 /* Private defines */
 /* I2C address */
 #define STMPE811_ADDRESS                0x82
