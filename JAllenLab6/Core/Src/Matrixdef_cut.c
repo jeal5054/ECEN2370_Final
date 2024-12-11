@@ -12,6 +12,12 @@ static uint8_t dummyTable[ROWS][COLS];
 static uint32_t randomNumber;
 
 void START_SCREEN(void){
+	for(int i = 0; i < ROWS; i++){
+		for(int j = 0; j < COLS; j++) {
+			dummyTable[i][j] = 0;
+		}
+	}
+
 	LCD_Clear(0,LCD_COLOR_BLUE);
 	LCD_SetTextColor(LCD_COLOR_WHITE);
 	LCD_SetFont(&Font16x24);
@@ -107,8 +113,8 @@ uint8_t check_State(void) {
 	//	2. Collision with a 1
 	//		a. Is it at the top of the screen -> Update Matrix, end game
 	//		b. Hits other block -> Update Matrix, make new object
-	if((object.originbit.y == 12) || (object.suboriginbit_0.y == 12) ||
-	   (object.suboriginbit_1.y == 12) || (object.suboriginbit_1.y == 12)) {
+	if((object.originbit.y == 0) || (object.suboriginbit_0.y == 0) ||
+	   (object.suboriginbit_1.y == 0) || (object.suboriginbit_1.y == 0)) {
 		Matrix_update();
 		object_Select();
 		printf("Hit bottom");
@@ -256,7 +262,7 @@ void shift_Left(void){
 	object.suboriginbit_2.x -= 1;
 	object.Rotation -= 1;
 	transform_rotation();
-	if(check_State() != 3) {
+	if(check_State() == 1) {
 		object = temp;
 	}
 	Matrix_update();
@@ -271,7 +277,7 @@ void shift_Right(void){
 	object.Rotation -= 1;
 	transform_rotation();
 
-	if(check_State() != 3) {
+	if(check_State() == 1) {
 		object = temp;
 	}
 
@@ -287,11 +293,10 @@ void tick_Matrix(void){
 	object.suboriginbit_2.y -= 1;
 	object.Rotation -= 1;
 	transform_rotation();
-
-	if(check_State() == 3) {
+	/*
+	if(check_State() == 1) {
 		object = temp;
-	}
-
+	}*/
 	Matrix_update();
 }
 
@@ -705,8 +710,6 @@ void transform_rotation(void){
 			}
 		break;
 	}
-
-	//Matrix_update();
 
 }
 

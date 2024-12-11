@@ -139,6 +139,7 @@ int main(void)
 	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
 	  else {
 #if cut_Mode  == 1
+	  if(check_State() == 2) {
 		end_time = __HAL_TIM_GET_COUNTER(&htim5);
 		total_time = (end_time - start_time);
 
@@ -147,6 +148,7 @@ int main(void)
 
 		GAME_OVER(total_time);
 		while(1);
+	  }
 #else
 		printMatrix();
 		if(check_State() == 3) {

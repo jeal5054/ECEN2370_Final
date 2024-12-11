@@ -533,7 +533,9 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_0) {  // Button pin
     	// rotate stuff
+    	Matrix_clear();
     	transform_rotation();
+    	Matrix_update();
     }
 }
 
