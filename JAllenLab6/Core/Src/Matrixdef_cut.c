@@ -293,6 +293,7 @@ void tick_Matrix(void){
 	object.suboriginbit_2.y -= 1;
 	object.Rotation -= 1;
 	transform_rotation();
+	check_State();
 	/*
 	if(check_State() == 1) {
 		object = temp;
