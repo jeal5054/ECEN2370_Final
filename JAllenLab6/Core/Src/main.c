@@ -129,7 +129,6 @@ int main(void)
   start_time = __HAL_TIM_GET_COUNTER(&htim5);
   LCD_Clear(0, LCD_COLOR_WHITE);
   addScheduledEvent(MATRIX_UPDATE_EVENT);
-  object_Select();
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
   HAL_TIM_Base_Start_IT(&htim2);
   /* Infinite loop */
@@ -139,6 +138,7 @@ int main(void)
 	  eventsToRun = getScheduledEvents();
 	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
 	  else {
+#if cut_Mode  == 1
 		end_time = __HAL_TIM_GET_COUNTER(&htim5);
 		total_time = (end_time - start_time);
 
@@ -147,6 +147,18 @@ int main(void)
 
 		GAME_OVER(total_time);
 		while(1);
+#else
+		printMatrix();
+		if(check_State() == 3) {
+			end_time = __HAL_TIM_GET_COUNTER(&htim5);
+			total_time = (end_time - start_time);
+
+			HAL_TIM_Base_Stop_IT(&htim2);
+			HAL_NVIC_DisableIRQ(EXTI0_IRQn);
+
+			GAME_OVER(total_time);
+		}
+#endif
 	  }
    }
   /* USER CODE END 3 */

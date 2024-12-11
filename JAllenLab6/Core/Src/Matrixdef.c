@@ -228,12 +228,13 @@ uint8_t check_State(void) {
         object_Select();
         return 1; // This means object has hit the bottom
     }
+    /*
     else if(((dummyTable[object.originbit.y - 1][object.originbit.x] == 1) && object.originbit.y >= 12) ||
             ((dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) && object.suboriginbit_0.y >= 12) ||
             ((dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) && object.suboriginbit_1.y >= 12) ||
             ((dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1) && object.suboriginbit_2.y >= 12)) {
         return 3;
-    }
+    }*/
     else {
         return 2; // In case we want to see nothing can be done
     }
@@ -337,7 +338,7 @@ void object_Select(void){
 		}
 
 	}
-	Matrix_update();
+	//Matrix_update();
 }
 
 void shift_Left(){
@@ -785,10 +786,11 @@ void transform_rotation(){
 			}
 		break;
 	}
-
+	/*
 	if (check_State() == 0) {
 		object = temp;
 	}
+	*/
 
 	Matrix_update();
 

@@ -107,9 +107,8 @@ uint8_t check_State(void) {
 	//	2. Collision with a 1
 	//		a. Is it at the top of the screen -> Update Matrix, end game
 	//		b. Hits other block -> Update Matrix, make new object
-
-	if((object.originbit.y == 0) || (object.suboriginbit_0.y == 0) ||
-	   (object.suboriginbit_1.y == 0) || (object.suboriginbit_1.y == 0)) {
+	if((object.originbit.y == 12) || (object.suboriginbit_0.y == 12) ||
+	   (object.suboriginbit_1.y == 12) || (object.suboriginbit_1.y == 12)) {
 		Matrix_update();
 		object_Select();
 		printf("Hit bottom");
@@ -289,7 +288,7 @@ void tick_Matrix(void){
 	object.Rotation -= 1;
 	transform_rotation();
 
-	if(check_State() != 3) {
+	if(check_State() == 3) {
 		object = temp;
 	}
 
@@ -297,7 +296,7 @@ void tick_Matrix(void){
 }
 
 void transform_rotation(void){
-	Matrix_clear();
+	//Matrix_clear();
 	object.Rotation += 1;
 	if((object.Rotation > 3) || (object.Rotation < 0)) {
 		object.Rotation = 0;
@@ -707,7 +706,7 @@ void transform_rotation(void){
 		break;
 	}
 
-	Matrix_update();
+	//Matrix_update();
 
 }
 
