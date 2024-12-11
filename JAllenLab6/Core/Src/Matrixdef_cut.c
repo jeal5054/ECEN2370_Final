@@ -1,19 +1,17 @@
 /*
- * Matrixdef.c
+ * Matrixdef_cut.c
  *
- *  Created on: Nov 19, 2024
+ *  Created on: Dec 10, 2024
  *      Author: jeffreya181
  */
 #include "Matrixdef.h"
-#if cut_Mode == 0
-#define MATRIX_LCD 1
+#if cut_Mode == 1
 
 static Object object;
 static uint8_t dummyTable[ROWS][COLS];
 static uint32_t randomNumber;
 
 void START_SCREEN(void){
-#if MATRIX_LCD == 1
 	LCD_Clear(0,LCD_COLOR_BLUE);
 	LCD_SetTextColor(LCD_COLOR_WHITE);
 	LCD_SetFont(&Font16x24);
@@ -46,55 +44,9 @@ void START_SCREEN(void){
 	LCD_DisplayChar(120,190,'A');
 	LCD_DisplayChar(140,190,'R');
 	LCD_DisplayChar(160,190,'T');
-
-
-#else
-	int rows = 13, cols = 10;  // Width set to 10
-	    char matrix_enc[13][10];
-
-	    // Initialize the matrix with spaces
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            matrix_enc[i][j] = ' ';
-	        }
-	    }
-
-	    // Add text to the matrix (manually adjusting for 10 columns)
-	    const char lines[13][10] = {
-	        "          ",
-	        "          ",
-	        "  TETRIS  ",
-	        "          ",
-	        "          ",
-	        "   PRESS  ",
-	        "          ",
-	        "  BUTTON  ",
-	        "          ",
-	        "    TO    ",
-	        "          ",
-	        "   START  ",
-	        "          "
-	    };
-
-	    // Copy the text into the matrix
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            matrix_enc[i][j] = lines[i][j];
-	        }
-	    }
-
-	    // Print the matrix
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            printf("%c", matrix_enc[i][j]);
-	        }
-	        printf("\n");
-	    }
-#endif
 }
 
 void GAME_OVER(uint32_t total_time) { // code for displaying game over
-#if MATRIX_LCD == 1
 	LCD_Clear(0,LCD_COLOR_BLUE);
 	LCD_SetTextColor(LCD_COLOR_WHITE);
 	LCD_SetFont(&Font16x24);
@@ -132,116 +84,71 @@ void GAME_OVER(uint32_t total_time) { // code for displaying game over
 	LCD_DisplayChar(125,190,':');
 	LCD_DisplayChar(145,190,s1);
 	LCD_DisplayChar(165,190,s2);
-
-
-#else
-	char matrix_enc[ROWS][COLS];
-
-		// Initialize the matrix with spaces
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				matrix_enc[i][j] = ' ';
-			}
-		}
-
-		// Add text to the matrix (manually adjusting for 10 columns)
-		const char lines[ROWS][COLS] = {
-			"          ",
-			"          ",
-			"   GAME   ",
-			"          ",
-			"   OVER   ",
-			"          ",
-			"          ",
-			"   TIME:  ",
-			"          ",
-			"   --:--  ",
-			"          ",
-			"          ",
-			"          "
-		};
-
-		// update Matrix
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				matrix_enc[i][j] = lines[i][j];
-			}
-		}
-
-		// Format the total time (in minutes and seconds)
-		uint32_t minutes = total_time / 60;
-		uint32_t seconds = total_time % 60;
-
-		// display time
-		matrix_enc[9][3] = (minutes / 10) + '0';  // Ten minutes
-		matrix_enc[9][4] = (minutes % 10) + '0';  // minutes
-		matrix_enc[9][5] = ':';
-		matrix_enc[9][6] = (seconds / 10) + '0';  //tens
-		matrix_enc[9][7] = (seconds % 10) + '0';  //single seconds
-
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				printf("%c", matrix_enc[i][j]);
-			}
-			printf("\n");
-		}
-#endif
 }
 
 void RND_NUM(void) { // issue here
 	uint32_t RND;
-	 RNG_HandleTypeDef hrng;
-
-
-		hrng.Instance = RNG;
-		if (HAL_RNG_Init(&hrng) != HAL_OK)
-		{
-			while(1);
-		}
-
-	  /* USER CODE BEGIN RNG_Init 2 */
+	RNG_HandleTypeDef hrng;
+	hrng.Instance = RNG;
+	if (HAL_RNG_Init(&hrng) != HAL_OK)
+	{
+		while(1);
+	}
     if (HAL_RNG_GenerateRandomNumber(&hrng, &RND) != HAL_OK) {
-    	// Handle the error (e.g., infinite loop or error logging)
 	    printf("Error Generating Random Number");
 	}
-	   //RND = RND % 7;  // Constrain the result to 0-6
-	   randomNumber = RND;
-	   //printf("Random Number: %ld", randomNumber);
+	randomNumber = RND;
 }
 
 uint8_t check_State(void) {
-    if( (object.originbit.x < 0) || (object.originbit.x >= 10) ||
-        (object.suboriginbit_0.x < 0) || (object.suboriginbit_0.x >= 10) ||
-        (object.suboriginbit_1.x < 0) || (object.suboriginbit_1.x >= 10) ||
-        (object.suboriginbit_2.x < 0) || (object.suboriginbit_2.x >= 10) )
-    {
-        return 0; // This means object has gone outside of the bounds
-    }
-    else if( (object.originbit.y <= 0) || (object.suboriginbit_0.y <= 0) ||
-             (object.suboriginbit_1.y <= 0) || (object.suboriginbit_2.y <= 0) ||
-             (dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
-             (dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) ||
-             (dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) ||
-             (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1))
-    {
-        Matrix_update();
-        object_Select();
-        return 1; // This means object has hit the bottom
-    }
-    else if(((dummyTable[object.originbit.y - 1][object.originbit.x] == 1) && object.originbit.y >= 12) ||
-            ((dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) && object.suboriginbit_0.y >= 12) ||
-            ((dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) && object.suboriginbit_1.y >= 12) ||
-            ((dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1) && object.suboriginbit_2.y >= 12)) {
-        return 3;
-    }
-    else {
-        return 2; // In case we want to see nothing can be done
-    }
+	//Built for 0 row on top
+	//CASES
+	//	1. Hits bottom of screen -> Update Matrix, make new object
+	//	2. Collision with a 1
+	//		a. Is it at the top of the screen -> Update Matrix, end game
+	//		b. Hits other block -> Update Matrix, make new object
+
+	if((object.originbit.y == 0) || (object.suboriginbit_0.y == 0) ||
+	   (object.suboriginbit_1.y == 0) || (object.suboriginbit_1.y == 0)) {
+		Matrix_update();
+		object_Select();
+		printf("Hit bottom");
+		return 0; // 0 -> Hit bottom
+
+	} else if((dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
+			  (dummyTable[object.suboriginbit_0.y - 1][object.suboriginbit_0.x] == 1) ||
+			  (dummyTable[object.suboriginbit_1.y - 1][object.suboriginbit_1.x] == 1) ||
+			  (dummyTable[object.suboriginbit_2.y - 1][object.suboriginbit_2.x] == 1) ){
+		uint8_t rowNonZeros[ROWS] = {0};
+		uint32_t compareRow = 0x3FF; // Mask to check the first 10 bits
+		for (int i = 0; i < ROWS; i++) {
+		    for (int j = 0; j < COLS; j++) {
+		        if (dummyTable[i][j] & compareRow) {  // Check if at least one bit in dummyTable[i][j] is non-zero
+		            rowNonZeros[i] = 1;
+		            break;  // Exit the inner loop once we've found a non-zero bit
+		        }
+		    }
+		}
+
+		for (int i = 0; i < ROWS; i++) {
+		    if (rowNonZeros[i] == 0) {
+		    	Matrix_update();
+		    	object_Select();
+		    	printf("Collision");
+		        return 1; // 1 -> Not all rows have non-zero values
+		    }
+		}
+		removeSchedulerEvent(MATRIX_UPDATE_EVENT);
+		printf("Game End");
+		return 2; // 2-> Collision with Block to end game
+
+	} else {
+		return 3; // 3-> Safe operation
+	}
 }
 
 void object_Select(void){
 	RND_NUM();
-	//Matrix_clear();
 	randomNumber = randomNumber % 7;
 	switch(randomNumber) {
 		case(ORICKY):{
@@ -249,7 +156,7 @@ void object_Select(void){
 				.name = ORICKY,
 				.Rotation = ROTATION_0 - 1,			  //       1
 				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
-				.suboriginbit_0 = {0, 0}, 
+				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
@@ -262,7 +169,7 @@ void object_Select(void){
 				.name = BRICKY,
 				.Rotation = ROTATION_0 - 1,           // 1
 				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
-				.suboriginbit_0 = {0, 0}, 
+				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
@@ -275,7 +182,7 @@ void object_Select(void){
 				.name = CLEVELAND,
 				.Rotation = ROTATION_0 - 1,           //   1 1
 				.originbit = { .x = 5, .y = 12 }, 	  //    [1] 1
-				.suboriginbit_0 = {0, 0},  
+				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
@@ -301,7 +208,7 @@ void object_Select(void){
 				.name = HERO,
 				.Rotation = ROTATION_0 - 1,          	     //
 				.originbit = { .x = 5, .y = 12 }, 			 //  1 1 [1] 1
-				.suboriginbit_0 = {0, 0}, 
+				.suboriginbit_0 = {0, 0},
 				.suboriginbit_1 = {0, 0},
 				.suboriginbit_2 = {0, 0}
 			};
@@ -337,46 +244,60 @@ void object_Select(void){
 		}
 
 	}
-	Matrix_update();
+
 }
 
-void shift_Left(){
-	Object temp = object;
 
+void shift_Left(void){
+	Object temp = object;
+	Matrix_clear();
 	object.originbit.x -= 1;
 	object.suboriginbit_0.x -= 1;
 	object.suboriginbit_1.x -= 1;
 	object.suboriginbit_2.x -= 1;
-	/*
-	object.originbit.x = X;
-	*/
 	object.Rotation -= 1;
 	transform_rotation();
-	if(check_State()) {
+	if(check_State() != 3) {
 		object = temp;
 	}
-
+	Matrix_update();
 }
-
-void shift_Right(){
+void shift_Right(void){
 	Object temp = object;
-
+	Matrix_clear();
 	object.originbit.x += 1;
 	object.suboriginbit_0.x += 1;
 	object.suboriginbit_1.x += 1;
 	object.suboriginbit_2.x += 1;
-
-	//object.originbit.x = X;
 	object.Rotation -= 1;
 	transform_rotation();
-	if(check_State()) {
+
+	if(check_State() != 3) {
 		object = temp;
 	}
+
+	Matrix_update();
 }
 
-void transform_rotation(){
-	Matrix_clear();
+void tick_Matrix(void){
 	Object temp = object;
+	Matrix_clear();
+	object.originbit.y -= 1;
+	object.suboriginbit_0.y -= 1;
+	object.suboriginbit_1.y -= 1;
+	object.suboriginbit_2.y -= 1;
+	object.Rotation -= 1;
+	transform_rotation();
+
+	if(check_State() != 3) {
+		object = temp;
+	}
+
+	Matrix_update();
+}
+
+void transform_rotation(void){
+	Matrix_clear();
 	object.Rotation += 1;
 	if((object.Rotation > 3) || (object.Rotation < 0)) {
 		object.Rotation = 0;
@@ -786,30 +707,12 @@ void transform_rotation(){
 		break;
 	}
 
-	if (check_State() == 0) {
-		object = temp;
-	}
-
 	Matrix_update();
 
 }
 
-void tick_Matrix(void){
-	 // erase the previous state
-	Matrix_clear();
-	// create the new object location
-	object.originbit.y -= 1;
-	object.suboriginbit_0.y -= 1;
-	object.suboriginbit_1.y -= 1;
-	object.suboriginbit_2.y -= 1;
-	// draw the new state
-	if(check_State() == 2) {
-		Matrix_update();
-	}
 
-}
 void printMatrix(void){
-#if MATRIX_LCD == 1
 	// Connect to the LCD screen and update that
 	//LCD_Draw_Circle_Fill(x,y,radius,color);
 	for (int i = 0; i < ROWS; i++) {
@@ -841,48 +744,14 @@ void printMatrix(void){
 			}
 		}
 	}
-
-#elif MATRIX_LCD == 0
-	printf("Matrix Representation:\n");
-
-	for (int i = ROWS-1; i >= 0; i--) {
-		printf("%3d|", i);
-		for (int j = 0; j < COLS; j++) {
-			printf("%5d", dummyTable[i][j]);
-		}
-		printf("\n");
-	}
-
-	printf("   +");
-	for (int j = 0; j < COLS; j++) {
-		printf("-----");
-	}
-	printf("\n");
-
-	printf("%5s", " ");
-	for (int i = 0; i < COLS; i++) {
-		printf("%5d", i);
-	}
-	printf("\n");
-
-#endif
 }
 
+
 void Matrix_clear(void) {
-	if ((object.originbit.y == 0) || (object.suboriginbit_0.y == 0) ||
-	    (object.suboriginbit_1.y == 0) ||(object.suboriginbit_2.y == 0))
-	{
-		dummyTable[object.originbit.y][object.originbit.x] = 1;
-		dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 1;
-		dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 1;
-		dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 1;
-	}
-	else {
-		dummyTable[object.originbit.y][object.originbit.x] = 0;
-		dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
-		dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
-		dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
-	}
+	dummyTable[object.originbit.y][object.originbit.x] = 0;
+	dummyTable[object.suboriginbit_0.y][object.suboriginbit_0.x] = 0;
+	dummyTable[object.suboriginbit_1.y][object.suboriginbit_1.x] = 0;
+	dummyTable[object.suboriginbit_2.y][object.suboriginbit_2.x] = 0;
 }
 void Matrix_update(void){
 	dummyTable[object.originbit.y][object.originbit.x] = 1;

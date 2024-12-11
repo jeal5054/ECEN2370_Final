@@ -14,6 +14,8 @@
 #include "LCD_Driver.h"
 #include "Scheduler.h"
 
+#define cut_Mode 1
+
 #define pixel_Width 24
 #define pixel_Length 24
 #define pixel_Area (pixel_Width*pixel_Length)
@@ -90,8 +92,10 @@ void GAME_OVER(uint32_t total_time);
 void RND_NUM(void);
 uint8_t check_State(void); // Essentially passing in an object that has be transformed to see if it violates issues
 void object_Select(void);
-void shift_Left(uint32_t X);
-void shift_Right(uint32_t X);
+//void shift_Left(uint32_t X);
+//void shift_Right(uint32_t X);
+void shift_Left(void);
+void shift_Right(void);
 void transform_rotation(void); // Rotating the object
 void tick_Matrix(void);
 void printMatrix(void);

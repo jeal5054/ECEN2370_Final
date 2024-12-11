@@ -84,7 +84,12 @@ void EXTI15_10_IRQHandler()
 		// May need to do numerous retries?
 		DetermineTouchPosition(&StaticTouchData);
 		/* Touch valid */
-		shift_Left(StaticTouchData.x);
+		//TODO: add touch rotations in later
+		if(StaticTouchData.x >= 120) {
+			shift_Right();
+		} else {
+			shift_Left();
+		}
 		printf("\nX: %03d\nY: %03d \n", StaticTouchData.x, StaticTouchData.y);
 		//LCD_Clear(0, LCD_COLOR_RED);
 
