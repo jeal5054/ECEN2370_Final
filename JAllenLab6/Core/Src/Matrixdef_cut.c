@@ -117,7 +117,7 @@ uint8_t check_State(void) {
 	   (object.suboriginbit_1.y == 0) || (object.suboriginbit_1.y == 0)) {
 		Matrix_update();
 		object_Select();
-		printf("Hit bottom");
+		printf("Hit bottom\n");
 		return 0; // 0 -> Hit bottom
 
 	} else if((dummyTable[object.originbit.y - 1][object.originbit.x] == 1) ||
@@ -139,12 +139,12 @@ uint8_t check_State(void) {
 		    if (rowNonZeros[i] == 0) {
 		    	Matrix_update();
 		    	object_Select();
-		    	printf("Collision");
+		    	printf("Collision\n");
 		        return 1; // 1 -> Not all rows have non-zero values
 		    }
 		}
 		removeSchedulerEvent(MATRIX_UPDATE_EVENT);
-		printf("Game End");
+		printf("Game End\n");
 		return 2; // 2-> Collision with Block to end game
 
 	} else {
