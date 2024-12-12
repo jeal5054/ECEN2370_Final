@@ -161,9 +161,9 @@ void object_Select(void){
 				.name = ORICKY,
 				.Rotation = ROTATION_0 - 1,			  //       1
 				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Oricky;
 		    transform_rotation();
@@ -174,9 +174,9 @@ void object_Select(void){
 				.name = BRICKY,
 				.Rotation = ROTATION_0 - 1,           // 1
 				.originbit = { .x = 5, .y = 12 },     // 1 [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Bricky;
 			transform_rotation();
@@ -187,9 +187,9 @@ void object_Select(void){
 				.name = CLEVELAND,
 				.Rotation = ROTATION_0 - 1,           //   1 1
 				.originbit = { .x = 5, .y = 12 }, 	  //    [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Cleveland;
 		    transform_rotation();
@@ -200,9 +200,9 @@ void object_Select(void){
 				.name = RHODE,
 				.Rotation = ROTATION_0 - 1,           //        1 1
 				.originbit = { .x = 5, .y = 12 },     //     1 [1]
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Rhode;
 			transform_rotation();
@@ -213,9 +213,9 @@ void object_Select(void){
 				.name = HERO,
 				.Rotation = ROTATION_0 - 1,          	     //
 				.originbit = { .x = 5, .y = 12 }, 			 //  1 1 [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Hero;
 			transform_rotation();
@@ -226,9 +226,9 @@ void object_Select(void){
 				.name = TEEWEE,
 				.Rotation = ROTATION_0 - 1,          			//    1
 				.originbit = { .x = 5, .y = 12 }, 			 	// 1 [1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Teewee;
 			transform_rotation();
@@ -239,9 +239,9 @@ void object_Select(void){
 				.name = SMASHBOY,
 				.Rotation = ROTATION_0 - 1,          			// 1  1
 				.originbit = { .x = 5, .y = 12 }, 			 	//[1] 1
-				.suboriginbit_0 = {0, 0},
-				.suboriginbit_1 = {0, 0},
-				.suboriginbit_2 = {0, 0}
+				.suboriginbit_0 = {5, 12},
+				.suboriginbit_1 = {5, 12},
+				.suboriginbit_2 = {5, 12}
 			};
 			object = Smashboy;
 			transform_rotation();
@@ -285,7 +285,7 @@ void shift_Right(void){
 }
 
 void tick_Matrix(void){
-	Object temp = object;
+	//Object temp = object;
 	Matrix_clear();
 	object.originbit.y -= 1;
 	object.suboriginbit_0.y -= 1;
@@ -294,10 +294,11 @@ void tick_Matrix(void){
 	object.Rotation -= 1;
 	transform_rotation();
 	check_State();
-	/*
+/*
 	if(check_State() == 1) {
 		object = temp;
-	}*/
+	}
+*/
 	Matrix_update();
 	printMatrix();
 }

@@ -120,7 +120,6 @@ int main(void)
   START_SCREEN();
 
   /* USER CODE END 2 */
-
   //uint32_t game_ender = 0;
   uint8_t BUTTON_START = 0;
   while(!BUTTON_START) {
@@ -139,6 +138,7 @@ int main(void)
 	  if(eventsToRun && MATRIX_UPDATE_EVENT) {printMatrix();}
 	  else {
 #if cut_Mode  == 1
+		 printMatrix();
 	  if(check_State() == 2) {
 		end_time = __HAL_TIM_GET_COUNTER(&htim5);
 		total_time = (end_time - start_time);
@@ -478,6 +478,7 @@ static void MX_TIM2_Init(void)
   }
   /* USER CODE BEGIN TIM2_Init 2 */
   HAL_TIM_Base_Stop_IT(&htim2);
+
   /*
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK) {
       Error_Handler(); // Handle errors appropriately

@@ -42,6 +42,7 @@ void LCDTouchScreenInterruptGPIOInit(void)
 
     // Interrupt Configuration
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+    // Set Touch interrupt to lower priority
 
 	LCDTouchIRQ.Line = EXTI_LINE_15;
 
