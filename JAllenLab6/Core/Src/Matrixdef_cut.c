@@ -266,6 +266,7 @@ void shift_Left(void){
 		object = temp;
 	}
 	Matrix_update();
+	printMatrix();
 }
 void shift_Right(void){
 	Object temp = object;
@@ -276,12 +277,11 @@ void shift_Right(void){
 	object.suboriginbit_2.x += 1;
 	object.Rotation -= 1;
 	transform_rotation();
-
 	if(check_State() == 1) {
 		object = temp;
 	}
-
 	Matrix_update();
+	printMatrix();
 }
 
 void tick_Matrix(void){
@@ -299,6 +299,7 @@ void tick_Matrix(void){
 		object = temp;
 	}*/
 	Matrix_update();
+	printMatrix();
 }
 
 void transform_rotation(void){
